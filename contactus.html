@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+
+    <!-- title -->
+    <title>Cheap Server Hosting - Evolve Servers</title>
+
+    <!-- meta tags -->
+	<meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1" name="viewport">
+    <meta content="We provide free teamspeak 3 server and affordable game server hosting." name="description">
+
+    <!-- fav icon -->
+    <link href="images/favicon.png" rel="shortcut icon">
+
+    <!-- css => style sheet -->
+    <link href="style.css" media="screen" rel="stylesheet" type="text/css">
+    <!-- css => responsive sheet -->
+    <link href="css/responsive.css" media="screen" rel="stylesheet" type="text/css">
+
+    <!-- JQuery => javascript libs -->
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($){
+    // send message
+      var form = $(".sendMessageForm");
+      $('.errorsmsg').hide();
+      $('.suucessmsg').hide();
+
+      form.on( "submit", function( event ) {
+      $(".loadingbtn").button('loading');
+
+      event.preventDefault();
+
+      $.ajax( {
+        type: "POST",
+        url: form.attr( 'action' ),
+        data: form.serialize(),
+        success: function( response ) {
+          if(response == "success"){
+
+            $('.errorsmsg').slideUp();
+
+            $('.suucessmsg').slideDown();
+
+
+          }
+          else{
+            $('.suucessmsg').slideUp();
+
+             $('.errorsmsg').slideDown();
+
+          }
+          console.log( response );
+           $(".loadingbtn").button('reset');
+        }
+      } );
+
+
+
+    } );
+
+      });
+
+    </script>
+
+  </head>
+
+  <body id="top" class="page">
+    <div class="loadingContainer">
+      <div class="loading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div><!-- end of loading -->
+    </div><!-- end of loading container -->
+
+
+    <div class="allWrapper">
+
+       <!-- Page Header -->
+      <section class="pageHeader section mainSection scrollAnchor darkSection" id="pageHeader">
+
+        <div class="topMenu navBar">
+          <div class="container">
+            <div class="row">
+
+
+			<ul class="topSocial socialNav col-md-6 col-sm-12">
+                <li class="facebook"><a href="#"><i class="animated fa fa-facebook"></i></a></li>
+                <li class="twitter"><a href="#"><i class="animated fa fa-twitter"></i></a></li>
+            </ul><!-- end of top social -->
+
+              <div class="topContact col-md-6 col-sm-12">
+                <ul>
+
+                  <li class="mail">
+                    Get In Touch :
+                    <a href="mailto:support@evolveservers.com">support@evolveservers.com</a>
+                  </li>
+                </ul>
+              </div><!-- end of top contacts -->
+
+
+            </div><!-- end of row -->
+          </div><!-- end of container -->
+        </div><!-- end of top menu -->
+
+        <!-- Header -->
+      <header class="header headerStyle1" id="header">
+        <div class="sticky scrollHeaderWrapper">
+          <div class="container">
+            <div class="row">
+
+              <div class="logoWrapper">
+                <h1 class="logo">
+                  <a class="clearfix" href="index.html" title="Evolve Servers">
+                    <span class="text">Evolve Servers</span>
+                  </a>
+                </h1><!-- end of logo -->
+              </div><!-- end of logoWrapper -->
+
+                <nav class="mainMenu mainNav" id="mainNav">
+                <ul class="navTabs">
+                  <li>
+                    <a href="index.html">Home</a>
+                  </li>
+				  <li>
+                    <a href="http://manage.evolveservers.com">Order Panel</a>
+                  </li>
+				  <li>
+                    <a href="locations.html">Locations</a>
+                  </li>
+				  <li>
+                      <a href="gamepanel.html">Game Panel Features</a>
+                  </li>
+				  <li>
+                    <a href="http://gpanel.evolveservers.com">Game Panel</a>
+                  </li>
+				  <li>
+                    <a href="contactus.html" class="active">Contact Us</a>
+                  </li>
+                </ul><!-- end of nav tabs -->
+              </nav><!-- end of main nav -->
+
+              <a href="#" class="generalLink" id="responsiveMainNavToggler"><i class="fa fa-bars"></i></a>
+              <div class="clearfix"></div><!-- end of clearfix -->
+              <div class="responsiveMainNav"></div><!-- end of responsive main nav -->
+
+            </div><!-- end of row -->
+          </div><!-- end of container -->
+        </div><!-- end of sticky -->
+      </header><!-- end of header -->
+
+
+        <!-- Page Info -->
+        <div class="pageInfo">
+          <div class="cover"></div>
+          <div class="container">
+            <div class="row">
+
+              <div class="col-md-4">
+                <h2 class="pageTitle">Contact Us</h2>
+              </div><!-- end of col-md-4 -->
+
+              <div class="col-md-8">
+                <ol class="breadcrumb">
+                  <li><a href="index.html">Home</a></li>
+                  <li class="active">Contact Us</li>
+                </ol><!-- end of breadcrumb -->
+              </div><!-- end of col-md-8 -->
+
+            </div><!-- end of row -->
+          </div><!-- end of container -->
+        </div><!-- end of page info -->
+
+
+      </section><!-- end of Page Header -->
+
+      <!-- contact -->
+      <section class="contact section mainSection scrollAnchor lightSection" id="contact">
+        <div class="sectionWrapper">
+          <div class="container">
+
+            <div class="row">
+
+              <div class="col-md-8">
+
+                <div class="department">
+                   <h5 class="departHeader">Get In Touch</h5><!-- end of depart header -->
+
+                   <div class="departBody clearfix">
+
+                      <p>..</p>
+                      <!-- start success message  -->
+
+                    <div class="col-md-12 alertWrapper suucessmsg">
+
+                      <div class="alert alert-success" role="alert">
+                        <button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+
+                        <div class="alertContents clearfix">
+                          <i class="animated alertIcon fa fa-check"></i>
+                          <span class="alertDetails">Your message has been sent successfully</span>
+                        </div><!-- end of alert contents -->
+
+                      </div><!-- end of alert -->
+
+                    </div><!-- end of alertWrapper -->
+
+                    <!-- end success message -->
+
+
+                    <!-- start error message  -->
+                    <div class="col-md-12 alertWrapper errorsmsg">
+
+                      <div class="alert alert-error" role="alert">
+                        <button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+
+                        <div class="alertContents clearfix">
+                          <i class="animated alertIcon fa fa-close"></i>
+                          <span class="alertDetails">An error occurred please try again later</span>
+                        </div><!-- end of alert contents -->
+
+                      </div><!-- end of alert -->
+
+                  </div><!-- end of alertWrapper -->
+
+                  <!-- end error message -->
+
+                      <div class="sendMessage add-send clearfix">
+
+                        <form method="POST" action="sendmail.php" class="sendMessageForm clearfix">
+                          <ul class="row clearfix">
+                            <li class="col-md-6"><input type="text" value="Your Name" onblur="if(this.value=='')this.value='Your Name'" onfocus="if(this.value=='Your Name')this.value=''" name="name" id="name" class="name"></li>
+                            <li class="col-md-6"><input type="email" value="Email" onblur="if(this.value=='')this.value='Email'" onfocus="if(this.value=='Email')this.value=''" name="email" id="email" class="email"></li>
+                            <li class="col-md-6"><input type="text" value="Phone" onblur="if(this.value=='')this.value='Phone'" onfocus="if(this.value=='Phone')this.value=''" name="phone" id="phone" class="phone"></li>
+                            <li class="col-md-6"><input type="text" value="Subject" onblur="if(this.value=='')this.value='Subject'" onfocus="if(this.value=='Subject')this.value=''" name="subject" id="subject" class="subject"></li>
+                            <li class="col-md-12"><textarea name="message" id="messageArea"></textarea></li>
+                          </ul>
+                          <button type="submit" class="loadingbtn"  data-loading-text="Sending Your Message .... ">&nbsp;&nbsp;&nbsp;&nbsp; Send &nbsp;&nbsp;&nbsp;&nbsp; </button>
+                        </form><!-- end of send Message form -->
+                      </div><!-- end of send Message -->
+
+                   </div><!-- end of widget body -->
+
+                </div><!-- end of widget -->
+
+              </div><!-- end of col-md-8 -->
+
+              <aside class="col-md-4 sidebar">
+
+
+                <div class="department">
+                  <h5 class="departHeader">More Info</h5><!-- end of depart header -->
+                  <div class="departBody">
+
+                    <p class="emailAccount">
+                      <span class="title">Email Accounts :</span>
+                      <br />
+                      Contact : <a href="mailto:contact@evolveservers.com">contact@evolveservers.com</a>
+					  <br />
+					            Support : <a href="mailto:support@evolveservers.com">support@evolveservers.com</a>
+                    </p>
+
+                  </div><!-- end of depart body -->
+                </div><!-- end of department -->
+
+                <div class="department following">
+                  <h5 class="departHeader followingHeader">Follow Us On Social Media</h5><!-- end of depart header -->
+                  <div class="departBody followingbody">
+                    <ul class="rrssb-buttons colorful left clearfix">
+                      <li class="facebook">
+                          <a href="http://facebook.com/evolveservers" class="popup"><i class="fa fa-facebook"></i></a>
+                      </li>
+                      <li class="twitter">
+                          <a href="http://twitter.com/evolve_servers" class="popup"><i class="fa fa-twitter"></i></a>
+                      </li>
+                      <li class="googleplus">
+                          <a href="#" class="popup"><i class="fa fa-google-plus"></i></a>
+                      </li>
+                      <!-- <li class="youtube">
+                        <!-- Replace subject with your message using URL Endocding: http://meyerweb.com/eric/tools/dencoder/ -->
+                        <a href="#"><i class="fa fa-youtube"></i></a>
+                      </li>
+                      <li class="linkedIn">
+                          <a href="#"><i class="fa fa-linkedin"></i></a>
+                      </li>
+                      <li class="pinterest">
+                          <a href="#"><i class="fa fa-pinterest"></i></a>
+                      </li> -->
+                    </ul>
+                  </div><!-- end of following body -->
+
+                </div><!-- end of following -->
+
+              </aside><!-- end of sidebar -->
+
+            </div>
+
+          </div><!-- end of container -->
+        </div><!-- end of section wrapper -->
+      </section><!-- end contact section -->
+
+
+
+
+      <!-- Footer -->
+      <footer class="footer" id="footer">
+
+        <!-- Top Footer -->
+        <div class="topFooter">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-md-4 footerWidget footerBox">
+                <h5 class="footerWidgetHeader">About Evolve Servers</h5><!-- end of footer widget header -->
+                <p class="footerAboutContent footerText">Evolve Servers is a game and voice server hosting provider with wide range of locations to choose from. We provide the best quality hosting at cheap affordable price.</p>
+                <div class="aboutLinks clearfix">
+                  <ul class="footerLinksList">
+                    <li><a href="index.html" title="Home">Home</a></li>
+                    <li><a href="http://billing.evolveservers.com/" title="Order Panel">Order Panel</a></li>
+                    <li><a href="#" title="Game Control Panel">Game Control Panel</a></li>
+                    <li><a href="contactus.html" title="Contact Us">Contact Us</a></li>
+                  </ul><!-- end of footer links list -->
+                </div><!-- end of about links -->
+              </div><!-- end of footer widget -->
+
+              <div class="col-md-4 footerWidget footerBox">
+                <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/evolve_servers" data-widget-id="598483031804903424">Tweets by @evolve_servers</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+              </div><!-- end of footer widget -->
+
+              <div class="col-md-4 footerWidget footerBox">
+                <h5 class="footerWidgetHeader">Get In Touch</h5>
+                <ul class="getInTouchList">
+                  <li>
+                    <span class="head">Contact :</span>
+                    <span class="text">
+                      Email Account  :
+                      <a href="mailto:contact@evolveservers.com" title="click to mail us">contact@evolveservers.com</a>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="head">Support  :</span>
+                    <span class="text">
+                       Email Account  :
+                      <a href="mailto:support@evolveservers.com" title="click to mail us">support@evolveservers.com</a>
+                    </span>
+                  </li>
+                </ul><!-- end of get In Touch List -->
+              </div><!-- end of footer widget -->
+
+            </div><!-- end of row -->
+          </div><!-- end of container -->
+        </div><!-- end of top footer -->
+
+        <!-- Bottom Footer -->
+        <div class="bottomFooter">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-md-6 copyrights">
+                <p>All Rights Reserved &copy; Evolve Servers</p>
+				<ul class="terms clearfix">
+                  <li><a href="tos.html" title="Terms of Service">Terms of Use</a></li>
+                  <li><a href="privacy.html" title="Privacy Policy">Privacy Policy</a></li>
+                </ul><!-- end of terms -->
+              </div><!-- end of copyrights -->
+
+              <div class="col-md-6 footerSocial">
+                <div class="footerSocialWrapper">
+
+                  <ul class="bottomSocial socialNav">
+                    <li class="facebook"><a href="#"><i class="animated fa fa-facebook"></i></a></li>
+                    <li class="twitter"><a href="#"><i class="animated fa fa-twitter"></i></a></li>
+                  </ul><!-- end of bottom social -->
+
+                  <ul class="paymentsNav">
+                    <li class="visa">
+                      <a href="#" title="visa"><img alt="visa card" src="images/visa.png" title="visa card"></a>
+                    </li>
+                    <li class="master">
+                      <a href="#" title="master card"><img alt="master card" src="images/master-card.png" title="master card"></a>
+                    </li>
+                    <li class="americanExpress">
+                      <a href="#" title="american express"><img alt="american express" src="images/american-express.png" title="american express"></a>
+                    </li>
+                    <li class="paypal">
+                      <a href="#" title="paypal"><img alt="paypal" src="images/paypal.png" title="paypal"></a>
+                    </li>
+                  </ul><!-- end of payments nav -->
+                </div><!-- end of footer social wrapper -->
+              </div><!-- end of footer social -->
+            </div><!-- end of row -->
+          </div><!-- end of container -->
+        </div><!-- end of bottom footer -->
+
+      </footer><!-- end of footer -->
+
+
+    </div><!-- end of all wrapper -->
+
+
+
+    <!-- JavaScript Files ================================================== -->
+    <script src="js/compiler.js" type="text/javascript"></script>
+    <script src="js/scripts.js" type="text/javascript"></script>
+
+    <!-- BootStrap JavaScript ================================================== -->
+    <script src="js/bootstrap.js" type="text/javascript"></script>
+
+
+    <!-- Switcher JavaScript ================================================== -->
+    <script src="js/switcher.js" type="text/javascript"></script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var $_Tawk_API={},$_Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5547af401aecef663055d9bb/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+
+
+  </body>
+</html>
