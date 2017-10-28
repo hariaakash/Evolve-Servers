@@ -2209,12 +2209,12 @@ all java scritpts compiler
     }
 
     if (video.type === 'youtube') {
-      path = "http://img.youtube.com/vi/" + video.id + "/hqdefault.jpg";
+      path = "https://img.youtube.com/vi/" + video.id + "/hqdefault.jpg";
       create(path);
     } else if (video.type === 'vimeo') {
       $.ajax({
         type: 'GET',
-        url: 'http://vimeo.com/api/v2/video/' + video.id + '.json',
+        url: 'https://vimeo.com/api/v2/video/' + video.id + '.json',
         jsonp: 'callback',
         dataType: 'jsonp',
         success: function(data) {
@@ -2256,10 +2256,10 @@ all java scritpts compiler
       html, wrap;
 
     if (video.type === 'youtube') {
-      html = '<iframe width="' + width + '" height="' + height + '" src="http://www.youtube.com/embed/'
+      html = '<iframe width="' + width + '" height="' + height + '" src="https://www.youtube.com/embed/'
         + video.id + '?autoplay=1&v=' + video.id + '" frameborder="0" allowfullscreen></iframe>';
     } else if (video.type === 'vimeo') {
-      html = '<iframe src="http://player.vimeo.com/video/' + video.id + '?autoplay=1" width="' + width
+      html = '<iframe src="https://player.vimeo.com/video/' + video.id + '?autoplay=1" width="' + width
         + '" height="' + height
         + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     }
@@ -3470,7 +3470,7 @@ if ( typeof define === 'function' && define.amd ) {
 ---------------------- */
 
 /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load
+ * Build: https://modernizr.com/download/#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load
  */
 ;
 
@@ -3504,7 +3504,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     domPrefixes = omPrefixes.toLowerCase().split(' '),
 
-    ns = {'svg': 'http://www.w3.org/2000/svg'},
+    ns = {'svg': 'https://www.w3.org/2000/svg'},
 
     tests = {},
     inputs = {},
@@ -5036,7 +5036,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 ---------------------- */
 //-- dorop down menu --
 // MSDropDown - jquery.dd.js
-// author: Marghoob Suleman - http://www.marghoobsuleman.com/
+// author: Marghoob Suleman - https://www.marghoobsuleman.com/
 // Date: 10 Nov, 2012 
 // Version: 3.5.2
 // Revision: 27
@@ -5057,7 +5057,7 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 /*
     JQuery Advanced News Ticker 1.0.11 (20/02/14)
     created by risq
-    website (docs & demos) : http://risq.github.io/jquery-advanced-news-ticker/
+    website (docs & demos) : https://risq.github.io/jquery-advanced-news-ticker/
 */
 (function(b,k,l,m){function g(a,f){this.element=a;this.$el=b(a);this.options=b.extend({},c,f);this._defaults=c;this._name=d;this.moveInterval;this.moving=this.paused=this.state=0;(this.$el.is("ul")||this.$el.is("ol"))&&this.init()}var d="newsTicker",c={row_height:20,max_rows:3,speed:400,duration:2500,direction:"up",autostart:1,pauseOnHover:1,nextButton:null,prevButton:null,startButton:null,stopButton:null,hasMoved:function(){},movingUp:function(){},movingDown:function(){},start:function(){},stop:function(){},
 pause:function(){},unpause:function(){}};g.prototype={init:function(){this.$el.height(this.options.row_height*this.options.max_rows-15).css({overflow:"hidden"});this.checkSpeed();this.options.nextButton&&"undefined"!==typeof this.options.nextButton[0]&&this.options.nextButton.click(function(a){this.moveNext();this.resetInterval()}.bind(this));this.options.prevButton&&"undefined"!==typeof this.options.prevButton[0]&&this.options.prevButton.click(function(a){this.movePrev();this.resetInterval()}.bind(this));
@@ -5077,7 +5077,7 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 /*
  Ridiculously Responsive Social Sharing Buttons
  Team: @dbox, @seagoat
- Site: http://www.kurtnoble.com/labs/rrssb
+ Site: https://www.kurtnoble.com/labs/rrssb
  Twitter: @therealkni
 */
 (function(e,t,n){"use strict";var r=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=t("li",n).length,i=100/r;t("li",n).css("width",i+"%").attr("data-initwidth",i)})},i=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=parseFloat(t(n).width()),i=t("li",n).not(".small").first().width(),s=t("li.small",n).length;i>170&&s<1?t(n).addClass("large-format"):t(n).removeClass("large-format");r<200?t(n).removeClass("small-format").addClass("tiny-format"):t(n).removeClass("tiny-format")})},s=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=0,i=0,s,o,a=t("li.small",n).length;if(a===t("li",n).length){var f=a*42,l=parseFloat(t(n).width());s=t("li.small",n).first();o=parseFloat(t(s).attr("data-size"))+55;if(f+o<l){t(n).removeClass("small-format");t("li.small",n).first().removeClass("small");u()}}else{t("li",n).not(".small").each(function(e){var n=parseFloat(t(this).attr("data-size"))+55,s=parseFloat(t(this).width());r+=s;i+=n});var c=r-i;s=t("li.small",n).first();o=parseFloat(t(s).attr("data-size"))+55;if(o<c){t(s).removeClass("small");u()}}})},o=function(e){t(".rrssb-buttons").each(function(e){var n=t(this),r=t("li",n).nextAll(),i=r.length;t(t("li",n).get().reverse()).each(function(e,r){if(t(this).hasClass("small")===!1){var i=parseFloat(t(this).attr("data-size"))+55,o=parseFloat(t(this).width());if(i>o){var a=t("li",n).not(".small").last();t(a).addClass("small");u()}}--r||s()})});e===!0&&f(u)},u=function(){t(".rrssb-buttons").each(function(e){var n=t(this),i,s,o,u,a,f=t("li.small",n).length;if(f>0&&f!==t("li",n).length){t(n).removeClass("small-format");t("li.small",n).css("width","42px");o=f*42;i=t("li",n).not(".small").length;s=100/i;a=o/i;navigator.userAgent.indexOf("Chrome")>=0||navigator.userAgent.indexOf("Safari")>=0?u="-webkit-calc("+s+"% - "+a+"px)":navigator.userAgent.indexOf("Firefox")>=0?u="-moz-calc("+s+"% - "+a+"px)":u="calc("+s+"% - "+a+"px)";t("li",n).not(".small").css("width",u)}else if(f===t("li",n).length){t(n).addClass("small-format");r()}else{t(n).removeClass("small-format");r()}});i()},a=function(){t(".rrssb-buttons").each(function(e){t(this).addClass("rrssb-"+(e+1))});r();t(".rrssb-buttons li .text").each(function(e){var n=parseFloat(t(this).width());t(this).closest("li").attr("data-size",n)});o(!0)},f=function(e){t(".rrssb-buttons li.small").removeClass("small");o();e()},l=function(t,r,i,s){var o=e.screenLeft!==n?e.screenLeft:screen.left,u=e.screenTop!==n?e.screenTop:screen.top,a=e.innerWidth?e.innerWidth:document.documentElement.clientWidth?document.documentElement.clientWidth:screen.width,f=e.innerHeight?e.innerHeight:document.documentElement.clientHeight?document.documentElement.clientHeight:screen.height,l=a/2-i/2+o,c=f/3-s/3+u,h=e.open(t,r,"scrollbars=yes, width="+i+", height="+s+", top="+c+", left="+l);e.focus&&h.focus()},c=function(){var e={};return function(t,n,r){r||(r="Don't call this twice without a uniqueId");e[r]&&clearTimeout(e[r]);e[r]=setTimeout(t,n)}}();t(".rrssb-buttons a.popup").on("click",function(e){var n=t(this);l(n.attr("href"),n.find(".text").html(),580,470);e.preventDefault()});t(e).resize(function(){f(u);c(function(){f(u)},200,"finished resizing")});t(document).ready(function(){a()})})(window,jQuery);
@@ -5092,12 +5092,12 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 * MIXITUP - A CSS3 and JQuery Filter & Sort Plugin
 * Version: 1.5.5
 * License: Creative Commons Attribution-NoDerivs 3.0 Unported - CC BY-ND 3.0
-* http://creativecommons.org/licenses/by-nd/3.0/
+* https://creativecommons.org/licenses/by-nd/3.0/
 * This software may be used freely on commercial and non-commercial projects with attribution to the author/copyright holder.
 * Author: Patrick Kunka
 * Copyright 2012-2013 Patrick Kunka, Barrel LLC, All Rights Reserved
 * 
-* http://mixitup.io
+* https://mixitup.io
 */
 
 (function($){
@@ -6457,8 +6457,8 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
  * Copyright (c) 2010-2011 Steve Schwartz (JangoSteve)
  *
  * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
+ *   https://www.opensource.org/licenses/mit-license.php
+ *   https://www.gnu.org/licenses/gpl.html
  *
  * Date: Thu May 09 17:30:00 2013 -0500
  */
@@ -6473,7 +6473,7 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 /*
   Base.js, version 1.1a
   Copyright 2006-2010, Dean Edwards
-  License: http://www.opensource.org/licenses/mit-license.php
+  License: https://www.opensource.org/licenses/mit-license.php
 */
 
 var Base = function() {
@@ -6625,7 +6625,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -6789,7 +6789,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -7068,7 +7068,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -7425,7 +7425,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -7696,7 +7696,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -7748,7 +7748,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -8171,7 +8171,7 @@ var FlipClock;
  *
  * @author     Justin Kimbrell
  * @copyright  2013 - Objective HTML, LLC
- * @licesnse   http://www.opensource.org/licenses/mit-license.php
+ * @licesnse   https://www.opensource.org/licenses/mit-license.php
  */
   
 (function($) {
@@ -8735,14 +8735,14 @@ var FlipClock;
   nice scroll
 ---------------------- */
 
-/* jquery.nicescroll 3.5.4 InuYaksa*2013 MIT http://areaaperta.com/nicescroll */(function(e){"function"===typeof define&&define.amd?define(["jquery"],e):e(jQuery)})(function(e){var y=!1,C=!1,J=5E3,K=2E3,x=0,F=["ms","moz","webkit","o"],s=window.requestAnimationFrame||!1,v=window.cancelAnimationFrame||!1;if(!s)for(var L in F){var D=F[L];s||(s=window[D+"RequestAnimationFrame"]);v||(v=window[D+"CancelAnimationFrame"]||window[D+"CancelRequestAnimationFrame"])}var z=window.MutationObserver||window.WebKitMutationObserver||!1,G={zindex:"auto",cursoropacitymin:0,cursoropacitymax:1,cursorcolor:"#424242",
+/* jquery.nicescroll 3.5.4 InuYaksa*2013 MIT https://areaaperta.com/nicescroll */(function(e){"function"===typeof define&&define.amd?define(["jquery"],e):e(jQuery)})(function(e){var y=!1,C=!1,J=5E3,K=2E3,x=0,F=["ms","moz","webkit","o"],s=window.requestAnimationFrame||!1,v=window.cancelAnimationFrame||!1;if(!s)for(var L in F){var D=F[L];s||(s=window[D+"RequestAnimationFrame"]);v||(v=window[D+"CancelAnimationFrame"]||window[D+"CancelRequestAnimationFrame"])}var z=window.MutationObserver||window.WebKitMutationObserver||!1,G={zindex:"auto",cursoropacitymin:0,cursoropacitymax:1,cursorcolor:"#424242",
 cursorwidth:"5px",cursorborder:"1px solid #fff",cursorborderradius:"5px",scrollspeed:60,mousescrollstep:24,touchbehavior:!1,hwacceleration:!0,usetransition:!0,boxzoom:!1,dblclickzoom:!0,gesturezoom:!0,grabcursorenabled:!0,autohidemode:!0,background:"",iframeautoresize:!0,cursorminheight:32,preservenativescrolling:!0,railoffset:!1,bouncescroll:!0,spacebarenabled:!0,railpadding:{top:0,right:0,left:0,bottom:0},disableoutline:!0,horizrailenabled:!0,railalign:"right",railvalign:"bottom",enabletranslate3d:!0,
 enablemousewheel:!0,enablekeyboard:!0,smoothscroll:!0,sensitiverail:!0,enablemouselockapi:!0,cursorfixedheight:!1,directionlockdeadzone:6,hidecursordelay:400,nativeparentscrolling:!0,enablescrollonselection:!0,overflowx:!0,overflowy:!0,cursordragspeed:0.3,rtlmode:"auto",cursordragontouch:!1,oneaxismousemode:"auto",scriptpath:function(){var e=document.getElementsByTagName("script"),e=e[e.length-1].src.split("?")[0];return 0<e.split("/").length?e.split("/").slice(0,-1).join("/")+"/":""}()},E=!1,M=function(){if(E)return E;
 var e=document.createElement("DIV"),b={haspointerlock:"pointerLockElement"in document||"mozPointerLockElement"in document||"webkitPointerLockElement"in document};b.isopera="opera"in window;b.isopera12=b.isopera&&"getUserMedia"in navigator;b.isoperamini="[object OperaMini]"===Object.prototype.toString.call(window.operamini);b.isie="all"in document&&"attachEvent"in e&&!b.isopera;b.isieold=b.isie&&!("msInterpolationMode"in e.style);b.isie7=b.isie&&!b.isieold&&(!("documentMode"in document)||7==document.documentMode);
 b.isie8=b.isie&&"documentMode"in document&&8==document.documentMode;b.isie9=b.isie&&"performance"in window&&9<=document.documentMode;b.isie10=b.isie&&"performance"in window&&10<=document.documentMode;b.isie9mobile=/iemobile.9/i.test(navigator.userAgent);b.isie9mobile&&(b.isie9=!1);b.isie7mobile=!b.isie9mobile&&b.isie7&&/iemobile/i.test(navigator.userAgent);b.ismozilla="MozAppearance"in e.style;b.iswebkit="WebkitAppearance"in e.style;b.ischrome="chrome"in window;b.ischrome22=b.ischrome&&b.haspointerlock;
 b.ischrome26=b.ischrome&&"transition"in e.style;b.cantouch="ontouchstart"in document.documentElement||"ontouchstart"in window;b.hasmstouch=window.navigator.msPointerEnabled||!1;b.ismac=/^mac$/i.test(navigator.platform);b.isios=b.cantouch&&/iphone|ipad|ipod/i.test(navigator.platform);b.isios4=b.isios&&!("seal"in Object);b.isandroid=/android/i.test(navigator.userAgent);b.trstyle=!1;b.hastransform=!1;b.hastranslate3d=!1;b.transitionstyle=!1;b.hastransition=!1;b.transitionend=!1;for(var h=["transform",
 "msTransform","webkitTransform","MozTransform","OTransform"],k=0;k<h.length;k++)if("undefined"!=typeof e.style[h[k]]){b.trstyle=h[k];break}b.hastransform=!1!=b.trstyle;b.hastransform&&(e.style[b.trstyle]="translate3d(1px,2px,3px)",b.hastranslate3d=/translate3d/.test(e.style[b.trstyle]));b.transitionstyle=!1;b.prefixstyle="";b.transitionend=!1;for(var h="transition webkitTransition MozTransition OTransition OTransition msTransition KhtmlTransition".split(" "),l=" -webkit- -moz- -o- -o -ms- -khtml-".split(" "),
-q="transitionend webkitTransitionEnd transitionend otransitionend oTransitionEnd msTransitionEnd KhtmlTransitionEnd".split(" "),k=0;k<h.length;k++)if(h[k]in e.style){b.transitionstyle=h[k];b.prefixstyle=l[k];b.transitionend=q[k];break}b.ischrome26&&(b.prefixstyle=l[1]);b.hastransition=b.transitionstyle;a:{h=["-moz-grab","-webkit-grab","grab"];if(b.ischrome&&!b.ischrome22||b.isie)h=[];for(k=0;k<h.length;k++)if(l=h[k],e.style.cursor=l,e.style.cursor==l){h=l;break a}h="url(http://www.google.com/intl/en_ALL/mapfiles/openhand.cur),n-resize"}b.cursorgrabvalue=
+q="transitionend webkitTransitionEnd transitionend otransitionend oTransitionEnd msTransitionEnd KhtmlTransitionEnd".split(" "),k=0;k<h.length;k++)if(h[k]in e.style){b.transitionstyle=h[k];b.prefixstyle=l[k];b.transitionend=q[k];break}b.ischrome26&&(b.prefixstyle=l[1]);b.hastransition=b.transitionstyle;a:{h=["-moz-grab","-webkit-grab","grab"];if(b.ischrome&&!b.ischrome22||b.isie)h=[];for(k=0;k<h.length;k++)if(l=h[k],e.style.cursor=l,e.style.cursor==l){h=l;break a}h="url(https://www.google.com/intl/en_ALL/mapfiles/openhand.cur),n-resize"}b.cursorgrabvalue=
 h;b.hasmousecapture="setCapture"in e;b.hasMutationObserver=!1!==z;return E=b},N=function(g,b){function h(){var c=a.win;if("zIndex"in c)return c.zIndex();for(;0<c.length&&9!=c[0].nodeType;){var b=c.css("zIndex");if(!isNaN(b)&&0!=b)return parseInt(b);c=c.parent()}return!1}function k(c,b,f){b=c.css(b);c=parseFloat(b);return isNaN(c)?(c=w[b]||0,f=3==c?f?a.win.outerHeight()-a.win.innerHeight():a.win.outerWidth()-a.win.innerWidth():1,a.isie8&&c&&(c+=1),f?c:0):c}function l(c,b,f,e){a._bind(c,b,function(a){a=
 a?a:window.event;var e={original:a,target:a.target||a.srcElement,type:"wheel",deltaMode:"MozMousePixelScroll"==a.type?0:1,deltaX:0,deltaZ:0,preventDefault:function(){a.preventDefault?a.preventDefault():a.returnValue=!1;return!1},stopImmediatePropagation:function(){a.stopImmediatePropagation?a.stopImmediatePropagation():a.cancelBubble=!0}};"mousewheel"==b?(e.deltaY=-0.025*a.wheelDelta,a.wheelDeltaX&&(e.deltaX=-0.025*a.wheelDeltaX)):e.deltaY=a.detail;return f.call(c,e)},e)}function q(c,b,f){var e,d;
 0==c.deltaMode?(e=-Math.floor(c.deltaX*(a.opt.mousescrollstep/54)),d=-Math.floor(c.deltaY*(a.opt.mousescrollstep/54))):1==c.deltaMode&&(e=-Math.floor(c.deltaX*a.opt.mousescrollstep),d=-Math.floor(c.deltaY*a.opt.mousescrollstep));b&&(a.opt.oneaxismousemode&&0==e&&d)&&(e=d,d=0);e&&(a.scrollmom&&a.scrollmom.stop(),a.lastdeltax+=e,a.debounced("mousewheelx",function(){var c=a.lastdeltax;a.lastdeltax=0;a.rail.drag||a.doScrollLeftBy(c)},15));if(d){if(a.opt.nativeparentscrolling&&f&&!a.ispage&&!a.zoomactive)if(0>
@@ -8943,7 +8943,7 @@ G)});
   jQuery Easing
 ---------------------- */
 /*
- * jQuery Easing v1.3 - http://gsgd.co.uk/sandbox/jquery/easing/
+ * jQuery Easing v1.3 - https://gsgd.co.uk/sandbox/jquery/easing/
  *
  * Uses the built in easing capabilities added In jQuery 1.1
  * to offer multiple easing options
