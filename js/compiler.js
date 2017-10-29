@@ -3080,306 +3080,6 @@ all java scritpts compiler
 //--------------------------------------------------------------------------------------------
 
 /* ---------------------- 
-  smooth scroller
----------------------- */
-
-function ssc_init() {
-    if (!document.body) return;
-    var e = document.body;
-    var t = document.documentElement;
-    var n = window.innerHeight;
-    var r = e.scrollHeight;
-    ssc_root = document.compatMode.indexOf("CSS") >= 0 ? t : e;
-    ssc_activeElement = e;
-    ssc_initdone = true;
-    if (top != self) {
-        ssc_frame = true
-    }
-    else if (r > n && (e.offsetHeight <= n || t.offsetHeight <= n)) {
-        ssc_root.style.height = "auto";
-        if (ssc_root.offsetHeight <= n) {
-            var i = document.createElement("div");
-            i.style.clear = "both";
-            e.appendChild(i)
-        }
-    }
-    if (!ssc_fixedback) {
-        e.style.backgroundAttachment = "scroll";
-        t.style.backgroundAttachment = "scroll"
-    }
-    if (ssc_keyboardsupport) {
-        ssc_addEvent("keydown", ssc_keydown)
-    }
-}
-
-function ssc_scrollArray(e, t, n, r) {
-    r || (r = 1e3);
-    ssc_directionCheck(t, n);
-    ssc_que.push({
-        x: t,
-        y: n,
-        lastX: t < 0 ? .99 : -.99,
-        lastY: n < 0 ? .99 : -.99,
-        start: +(new Date)
-    });
-    if (ssc_pending) {
-        return
-    }
-    var i = function () {
-        var s = +(new Date);
-        var o = 0;
-        var u = 0;
-        for (var a = 0; a < ssc_que.length; a++) {
-            var f = ssc_que[a];
-            var l = s - f.start;
-            var c = l >= ssc_animtime;
-            var h = c ? 1 : l / ssc_animtime;
-            if (ssc_pulseAlgorithm) {
-                h = ssc_pulse(h)
-            }
-            var p = f.x * h - f.lastX >> 0;
-            var d = f.y * h - f.lastY >> 0;
-            o += p;
-            u += d;
-            f.lastX += p;
-            f.lastY += d;
-            if (c) {
-                ssc_que.splice(a, 1);
-                a--
-            }
-        }
-        if (t) {
-            var v = e.scrollLeft;
-            e.scrollLeft += o;
-            if (o && e.scrollLeft === v) {
-                t = 0
-            }
-        }
-        if (n) {
-            var m = e.scrollTop;
-            e.scrollTop += u;
-            if (u && e.scrollTop === m) {
-                n = 0
-            }
-        }
-        if (!t && !n) {
-            ssc_que = []
-        }
-        if (ssc_que.length) {
-            setTimeout(i, r / ssc_framerate + 1)
-        }
-        else {
-            ssc_pending = false
-        }
-    };
-    setTimeout(i, 0);
-    ssc_pending = true
-}
-
-function ssc_wheel(e) {
-    if (!ssc_initdone) {
-        init()
-    }
-    var t = e.target;
-    var n = ssc_overflowingAncestor(t);
-    if (!n || e.defaultPrevented || ssc_isNodeName(ssc_activeElement, "embed") || ssc_isNodeName(t, "embed") && /\.pdf/i.test(t.src)) {
-        return true
-    }
-    var r = e.wheelDeltaX || 0;
-    var i = e.wheelDeltaY || 0;
-    if (!r && !i) {
-        i = e.wheelDelta || 0
-    }
-    if (Math.abs(r) > 1.2) {
-        r *= ssc_stepsize / 120
-    }
-    if (Math.abs(i) > 1.2) {
-        i *= ssc_stepsize / 120
-    }
-    ssc_scrollArray(n, -r, -i);
-    e.preventDefault()
-}
-
-function ssc_keydown(e) {
-    var t = e.target;
-    var n = e.ctrlKey || e.altKey || e.metaKey;
-    if (/input|textarea|embed/i.test(t.nodeName) || t.isContentEditable || e.defaultPrevented || n) {
-        return true
-    }
-    if (ssc_isNodeName(t, "button") && e.keyCode === ssc_key.spacebar) {
-        return true
-    }
-    var r, i = 0,
-        s = 0;
-    var o = ssc_overflowingAncestor(ssc_activeElement);
-    var u = o.clientHeight;
-    if (o == document.body) {
-        u = window.innerHeight
-    }
-    switch (e.keyCode) {
-    case ssc_key.up:
-        s = -ssc_arrowscroll;
-        break;
-    case ssc_key.down:
-        s = ssc_arrowscroll;
-        break;
-    case ssc_key.spacebar:
-        r = e.shiftKey ? 1 : -1;
-        s = -r * u * .9;
-        break;
-    case ssc_key.pageup:
-        s = -u * .9;
-        break;
-    case ssc_key.pagedown:
-        s = u * .9;
-        break;
-    case ssc_key.home:
-        s = -o.scrollTop;
-        break;
-    case ssc_key.end:
-        var a = o.scrollHeight - o.scrollTop - u;
-        s = a > 0 ? a + 10 : 0;
-        break;
-    case ssc_key.left:
-        i = -ssc_arrowscroll;
-        break;
-    case ssc_key.right:
-        i = ssc_arrowscroll;
-        break;
-    default:
-        return true
-    }
-    ssc_scrollArray(o, i, s);
-    e.preventDefault()
-}
-
-function ssc_mousedown(e) {
-    ssc_activeElement = e.target
-}
-
-function ssc_setCache(e, t) {
-    for (var n = e.length; n--;) ssc_cache[ssc_uniqueID(e[n])] = t;
-    return t
-}
-
-function ssc_overflowingAncestor(e) {
-    var t = [];
-    var n = ssc_root.scrollHeight;
-    do {
-        var r = ssc_cache[ssc_uniqueID(e)];
-        if (r) {
-            return ssc_setCache(t, r)
-        }
-        t.push(e);
-        if (n === e.scrollHeight) {
-            if (!ssc_frame || ssc_root.clientHeight + 10 < n) {
-                return ssc_setCache(t, document.body)
-            }
-        }
-        else if (e.clientHeight + 10 < e.scrollHeight) {
-            overflow = getComputedStyle(e, "").getPropertyValue("overflow");
-            if (overflow === "scroll" || overflow === "auto") {
-                return ssc_setCache(t, e)
-            }
-        }
-    } while (e = e.parentNode)
-}
-
-function ssc_addEvent(e, t, n) {
-    window.addEventListener(e, t, n || false)
-}
-
-function ssc_removeEvent(e, t, n) {
-    window.removeEventListener(e, t, n || false)
-}
-
-function ssc_isNodeName(e, t) {
-    return e.nodeName.toLowerCase() === t.toLowerCase()
-}
-
-function ssc_directionCheck(e, t) {
-    e = e > 0 ? 1 : -1;
-    t = t > 0 ? 1 : -1;
-    if (ssc_direction.x !== e || ssc_direction.y !== t) {
-        ssc_direction.x = e;
-        ssc_direction.y = t;
-        ssc_que = []
-    }
-}
-
-function ssc_pulse_(e) {
-    var t, n, r;
-    e = e * ssc_pulseScale;
-    if (e < 1) {
-        t = e - (1 - Math.exp(-e))
-    }
-    else {
-        n = Math.exp(-1);
-        e -= 1;
-        r = 1 - Math.exp(-e);
-        t = n + r * (1 - n)
-    }
-    return t * ssc_pulseNormalize
-}
-
-function ssc_pulse(e) {
-    if (e >= 1) return 1;
-    if (e <= 0) return 0;
-    if (ssc_pulseNormalize == 1) {
-        ssc_pulseNormalize /= ssc_pulse_(1)
-    }
-    return ssc_pulse_(e)
-}
-var ssc_framerate = 150;
-var ssc_animtime = 500;
-var ssc_stepsize = 150;
-var ssc_pulseAlgorithm = true;
-var ssc_pulseScale = 6;
-var ssc_pulseNormalize = 1;
-var ssc_keyboardsupport = true;
-var ssc_arrowscroll = 50;
-var ssc_frame = false;
-var ssc_direction = {
-    x: 0,
-    y: 0
-};
-var ssc_initdone = false;
-var ssc_fixedback = true;
-var ssc_root = document.documentElement;
-var ssc_activeElement;
-var ssc_key = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40,
-    spacebar: 32,
-    pageup: 33,
-    pagedown: 34,
-    end: 35,
-    home: 36
-};
-var ssc_que = [];
-var ssc_pending = false;
-var ssc_cache = {};
-setInterval(function () {
-    ssc_cache = {}
-}, 10 * 1e3);
-var ssc_uniqueID = function () {
-    var e = 0;
-    return function (t) {
-        return t.ssc_uniqueID || (t.ssc_uniqueID = e++)
-    }
-}();
-var browser =  /chrome/.test(navigator.userAgent.toLowerCase()); 
-if (browser) {
-    ssc_addEvent("mousedown", ssc_mousedown);
-    ssc_addEvent("mousewheel", ssc_wheel);
-    ssc_addEvent("load", ssc_init)
-}
-
-//--------------------------------------------------------------------------------------------
-
-/* ---------------------- 
   modernizer
 ---------------------- */
 
@@ -4218,731 +3918,6 @@ that.el.setAttribute('src',path);}}
 load();};if(Retina.isRetina()){Retina.init(root);}})();
 //--------------------------------------------------------------------------------------------
 
-/* ---------------------- 
-  way point
----------------------- */
-/*
-jQuery Waypoints - v2.0.4
-Copyright (c) 2011-2014 Caleb Troughton
-Dual licensed under the MIT license and GPL license.
-https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
-*/
-
-
-(function() {
-  var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
-    __slice = [].slice;
-
-  (function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
-      return define('waypoints', ['jquery'], function($) {
-        return factory($, root);
-      });
-    } else {
-      return factory(root.jQuery, root);
-    }
-  })(this, function($, window) {
-    var $w, Context, Waypoint, allWaypoints, contextCounter, contextKey, contexts, isTouch, jQMethods, methods, resizeEvent, scrollEvent, waypointCounter, waypointKey, wp, wps;
-
-    $w = $(window);
-    isTouch = __indexOf.call(window, 'ontouchstart') >= 0;
-    allWaypoints = {
-      horizontal: {},
-      vertical: {}
-    };
-    contextCounter = 1;
-    contexts = {};
-    contextKey = 'waypoints-context-id';
-    resizeEvent = 'resize.waypoints';
-    scrollEvent = 'scroll.waypoints';
-    waypointCounter = 1;
-    waypointKey = 'waypoints-waypoint-ids';
-    wp = 'waypoint';
-    wps = 'waypoints';
-    Context = (function() {
-      function Context($element) {
-        var _this = this;
-
-        this.$element = $element;
-        this.element = $element[0];
-        this.didResize = false;
-        this.didScroll = false;
-        this.id = 'context' + contextCounter++;
-        this.oldScroll = {
-          x: $element.scrollLeft(),
-          y: $element.scrollTop()
-        };
-        this.waypoints = {
-          horizontal: {},
-          vertical: {}
-        };
-        this.element[contextKey] = this.id;
-        contexts[this.id] = this;
-        $element.bind(scrollEvent, function() {
-          var scrollHandler;
-
-          if (!(_this.didScroll || isTouch)) {
-            _this.didScroll = true;
-            scrollHandler = function() {
-              _this.doScroll();
-              return _this.didScroll = false;
-            };
-            return window.setTimeout(scrollHandler, $[wps].settings.scrollThrottle);
-          }
-        });
-        $element.bind(resizeEvent, function() {
-          var resizeHandler;
-
-          if (!_this.didResize) {
-            _this.didResize = true;
-            resizeHandler = function() {
-              $[wps]('refresh');
-              return _this.didResize = false;
-            };
-            return window.setTimeout(resizeHandler, $[wps].settings.resizeThrottle);
-          }
-        });
-      }
-
-      Context.prototype.doScroll = function() {
-        var axes,
-          _this = this;
-
-        axes = {
-          horizontal: {
-            newScroll: this.$element.scrollLeft(),
-            oldScroll: this.oldScroll.x,
-            forward: 'right',
-            backward: 'left'
-          },
-          vertical: {
-            newScroll: this.$element.scrollTop(),
-            oldScroll: this.oldScroll.y,
-            forward: 'down',
-            backward: 'up'
-          }
-        };
-        if (isTouch && (!axes.vertical.oldScroll || !axes.vertical.newScroll)) {
-          $[wps]('refresh');
-        }
-        $.each(axes, function(aKey, axis) {
-          var direction, isForward, triggered;
-
-          triggered = [];
-          isForward = axis.newScroll > axis.oldScroll;
-          direction = isForward ? axis.forward : axis.backward;
-          $.each(_this.waypoints[aKey], function(wKey, waypoint) {
-            var _ref, _ref1;
-
-            if ((axis.oldScroll < (_ref = waypoint.offset) && _ref <= axis.newScroll)) {
-              return triggered.push(waypoint);
-            } else if ((axis.newScroll < (_ref1 = waypoint.offset) && _ref1 <= axis.oldScroll)) {
-              return triggered.push(waypoint);
-            }
-          });
-          triggered.sort(function(a, b) {
-            return a.offset - b.offset;
-          });
-          if (!isForward) {
-            triggered.reverse();
-          }
-          return $.each(triggered, function(i, waypoint) {
-            if (waypoint.options.continuous || i === triggered.length - 1) {
-              return waypoint.trigger([direction]);
-            }
-          });
-        });
-        return this.oldScroll = {
-          x: axes.horizontal.newScroll,
-          y: axes.vertical.newScroll
-        };
-      };
-
-      Context.prototype.refresh = function() {
-        var axes, cOffset, isWin,
-          _this = this;
-
-        isWin = $.isWindow(this.element);
-        cOffset = this.$element.offset();
-        this.doScroll();
-        axes = {
-          horizontal: {
-            contextOffset: isWin ? 0 : cOffset.left,
-            contextScroll: isWin ? 0 : this.oldScroll.x,
-            contextDimension: this.$element.width(),
-            oldScroll: this.oldScroll.x,
-            forward: 'right',
-            backward: 'left',
-            offsetProp: 'left'
-          },
-          vertical: {
-            contextOffset: isWin ? 0 : cOffset.top,
-            contextScroll: isWin ? 0 : this.oldScroll.y,
-            contextDimension: isWin ? $[wps]('viewportHeight') : this.$element.height(),
-            oldScroll: this.oldScroll.y,
-            forward: 'down',
-            backward: 'up',
-            offsetProp: 'top'
-          }
-        };
-        return $.each(axes, function(aKey, axis) {
-          return $.each(_this.waypoints[aKey], function(i, waypoint) {
-            var adjustment, elementOffset, oldOffset, _ref, _ref1;
-
-            adjustment = waypoint.options.offset;
-            oldOffset = waypoint.offset;
-            elementOffset = $.isWindow(waypoint.element) ? 0 : waypoint.$element.offset()[axis.offsetProp];
-            if ($.isFunction(adjustment)) {
-              adjustment = adjustment.apply(waypoint.element);
-            } else if (typeof adjustment === 'string') {
-              adjustment = parseFloat(adjustment);
-              if (waypoint.options.offset.indexOf('%') > -1) {
-                adjustment = Math.ceil(axis.contextDimension * adjustment / 100);
-              }
-            }
-            waypoint.offset = elementOffset - axis.contextOffset + axis.contextScroll - adjustment;
-            if ((waypoint.options.onlyOnScroll && (oldOffset != null)) || !waypoint.enabled) {
-              return;
-            }
-            if (oldOffset !== null && (oldOffset < (_ref = axis.oldScroll) && _ref <= waypoint.offset)) {
-              return waypoint.trigger([axis.backward]);
-            } else if (oldOffset !== null && (oldOffset > (_ref1 = axis.oldScroll) && _ref1 >= waypoint.offset)) {
-              return waypoint.trigger([axis.forward]);
-            } else if (oldOffset === null && axis.oldScroll >= waypoint.offset) {
-              return waypoint.trigger([axis.forward]);
-            }
-          });
-        });
-      };
-
-      Context.prototype.checkEmpty = function() {
-        if ($.isEmptyObject(this.waypoints.horizontal) && $.isEmptyObject(this.waypoints.vertical)) {
-          this.$element.unbind([resizeEvent, scrollEvent].join(' '));
-          return delete contexts[this.id];
-        }
-      };
-
-      return Context;
-
-    })();
-    Waypoint = (function() {
-      function Waypoint($element, context, options) {
-        var idList, _ref;
-
-        options = $.extend({}, $.fn[wp].defaults, options);
-        if (options.offset === 'bottom-in-view') {
-          options.offset = function() {
-            var contextHeight;
-
-            contextHeight = $[wps]('viewportHeight');
-            if (!$.isWindow(context.element)) {
-              contextHeight = context.$element.height();
-            }
-            return contextHeight - $(this).outerHeight();
-          };
-        }
-        this.$element = $element;
-        this.element = $element[0];
-        this.axis = options.horizontal ? 'horizontal' : 'vertical';
-        this.callback = options.handler;
-        this.context = context;
-        this.enabled = options.enabled;
-        this.id = 'waypoints' + waypointCounter++;
-        this.offset = null;
-        this.options = options;
-        context.waypoints[this.axis][this.id] = this;
-        allWaypoints[this.axis][this.id] = this;
-        idList = (_ref = this.element[waypointKey]) != null ? _ref : [];
-        idList.push(this.id);
-        this.element[waypointKey] = idList;
-      }
-
-      Waypoint.prototype.trigger = function(args) {
-        if (!this.enabled) {
-          return;
-        }
-        if (this.callback != null) {
-          this.callback.apply(this.element, args);
-        }
-        if (this.options.triggerOnce) {
-          return this.destroy();
-        }
-      };
-
-      Waypoint.prototype.disable = function() {
-        return this.enabled = false;
-      };
-
-      Waypoint.prototype.enable = function() {
-        this.context.refresh();
-        return this.enabled = true;
-      };
-
-      Waypoint.prototype.destroy = function() {
-        delete allWaypoints[this.axis][this.id];
-        delete this.context.waypoints[this.axis][this.id];
-        return this.context.checkEmpty();
-      };
-
-      Waypoint.getWaypointsByElement = function(element) {
-        var all, ids;
-
-        ids = element[waypointKey];
-        if (!ids) {
-          return [];
-        }
-        all = $.extend({}, allWaypoints.horizontal, allWaypoints.vertical);
-        return $.map(ids, function(id) {
-          return all[id];
-        });
-      };
-
-      return Waypoint;
-
-    })();
-    methods = {
-      init: function(f, options) {
-        var _ref;
-
-        if (options == null) {
-          options = {};
-        }
-        if ((_ref = options.handler) == null) {
-          options.handler = f;
-        }
-        this.each(function() {
-          var $this, context, contextElement, _ref1;
-
-          $this = $(this);
-          contextElement = (_ref1 = options.context) != null ? _ref1 : $.fn[wp].defaults.context;
-          if (!$.isWindow(contextElement)) {
-            contextElement = $this.closest(contextElement);
-          }
-          contextElement = $(contextElement);
-          context = contexts[contextElement[0][contextKey]];
-          if (!context) {
-            context = new Context(contextElement);
-          }
-          return new Waypoint($this, context, options);
-        });
-        $[wps]('refresh');
-        return this;
-      },
-      disable: function() {
-        return methods._invoke.call(this, 'disable');
-      },
-      enable: function() {
-        return methods._invoke.call(this, 'enable');
-      },
-      destroy: function() {
-        return methods._invoke.call(this, 'destroy');
-      },
-      prev: function(axis, selector) {
-        return methods._traverse.call(this, axis, selector, function(stack, index, waypoints) {
-          if (index > 0) {
-            return stack.push(waypoints[index - 1]);
-          }
-        });
-      },
-      next: function(axis, selector) {
-        return methods._traverse.call(this, axis, selector, function(stack, index, waypoints) {
-          if (index < waypoints.length - 1) {
-            return stack.push(waypoints[index + 1]);
-          }
-        });
-      },
-      _traverse: function(axis, selector, push) {
-        var stack, waypoints;
-
-        if (axis == null) {
-          axis = 'vertical';
-        }
-        if (selector == null) {
-          selector = window;
-        }
-        waypoints = jQMethods.aggregate(selector);
-        stack = [];
-        this.each(function() {
-          var index;
-
-          index = $.inArray(this, waypoints[axis]);
-          return push(stack, index, waypoints[axis]);
-        });
-        return this.pushStack(stack);
-      },
-      _invoke: function(method) {
-        this.each(function() {
-          var waypoints;
-
-          waypoints = Waypoint.getWaypointsByElement(this);
-          return $.each(waypoints, function(i, waypoint) {
-            waypoint[method]();
-            return true;
-          });
-        });
-        return this;
-      }
-    };
-    $.fn[wp] = function() {
-      var args, method;
-
-      method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (methods[method]) {
-        return methods[method].apply(this, args);
-      } else if ($.isFunction(method)) {
-        return methods.init.apply(this, arguments);
-      } else if ($.isPlainObject(method)) {
-        return methods.init.apply(this, [null, method]);
-      } else if (!method) {
-        return $.error("jQuery Waypoints needs a callback function or handler option.");
-      } else {
-        return $.error("The " + method + " method does not exist in jQuery Waypoints.");
-      }
-    };
-    $.fn[wp].defaults = {
-      context: window,
-      continuous: true,
-      enabled: true,
-      horizontal: false,
-      offset: 0,
-      triggerOnce: false
-    };
-    jQMethods = {
-      refresh: function() {
-        return $.each(contexts, function(i, context) {
-          return context.refresh();
-        });
-      },
-      viewportHeight: function() {
-        var _ref;
-
-        return (_ref = window.innerHeight) != null ? _ref : $w.height();
-      },
-      aggregate: function(contextSelector) {
-        var collection, waypoints, _ref;
-
-        collection = allWaypoints;
-        if (contextSelector) {
-          collection = (_ref = contexts[$(contextSelector)[0][contextKey]]) != null ? _ref.waypoints : void 0;
-        }
-        if (!collection) {
-          return [];
-        }
-        waypoints = {
-          horizontal: [],
-          vertical: []
-        };
-        $.each(waypoints, function(axis, arr) {
-          $.each(collection[axis], function(key, waypoint) {
-            return arr.push(waypoint);
-          });
-          arr.sort(function(a, b) {
-            return a.offset - b.offset;
-          });
-          waypoints[axis] = $.map(arr, function(waypoint) {
-            return waypoint.element;
-          });
-          return waypoints[axis] = $.unique(waypoints[axis]);
-        });
-        return waypoints;
-      },
-      above: function(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, 'vertical', function(context, waypoint) {
-          return waypoint.offset <= context.oldScroll.y;
-        });
-      },
-      below: function(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, 'vertical', function(context, waypoint) {
-          return waypoint.offset > context.oldScroll.y;
-        });
-      },
-      left: function(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, 'horizontal', function(context, waypoint) {
-          return waypoint.offset <= context.oldScroll.x;
-        });
-      },
-      right: function(contextSelector) {
-        if (contextSelector == null) {
-          contextSelector = window;
-        }
-        return jQMethods._filter(contextSelector, 'horizontal', function(context, waypoint) {
-          return waypoint.offset > context.oldScroll.x;
-        });
-      },
-      enable: function() {
-        return jQMethods._invoke('enable');
-      },
-      disable: function() {
-        return jQMethods._invoke('disable');
-      },
-      destroy: function() {
-        return jQMethods._invoke('destroy');
-      },
-      extendFn: function(methodName, f) {
-        return methods[methodName] = f;
-      },
-      _invoke: function(method) {
-        var waypoints;
-
-        waypoints = $.extend({}, allWaypoints.vertical, allWaypoints.horizontal);
-        return $.each(waypoints, function(key, waypoint) {
-          waypoint[method]();
-          return true;
-        });
-      },
-      _filter: function(selector, axis, test) {
-        var context, waypoints;
-
-        context = contexts[$(selector)[0][contextKey]];
-        if (!context) {
-          return [];
-        }
-        waypoints = [];
-        $.each(context.waypoints[axis], function(i, waypoint) {
-          if (test(context, waypoint)) {
-            return waypoints.push(waypoint);
-          }
-        });
-        waypoints.sort(function(a, b) {
-          return a.offset - b.offset;
-        });
-        return $.map(waypoints, function(waypoint) {
-          return waypoint.element;
-        });
-      }
-    };
-    $[wps] = function() {
-      var args, method;
-
-      method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      if (jQMethods[method]) {
-        return jQMethods[method].apply(null, args);
-      } else {
-        return jQMethods.aggregate.call(null, method);
-      }
-    };
-    $[wps].settings = {
-      resizeThrottle: 100,
-      scrollThrottle: 30
-    };
-    return $w.load(function() {
-      return $[wps]('refresh');
-    });
-  });
-
-}).call(this);
-
-//--------------------------------------------------------------------------------------------
-
-
-
-/* ---------------------- 
-  fancySelect
----------------------- */
-// Generated by CoffeeScript 1.4.0
-(function() {
-  var $;
-
-  $ = window.jQuery || window.Zepto || window.$;
-
-  $.fn.fancySelect = function(opts) {
-    var isiOS, settings;
-    if (opts == null) {
-      opts = {};
-    }
-    settings = $.extend({
-      forceiOS: false,
-      includeBlank: false
-    }, opts);
-    isiOS = !!navigator.userAgent.match(/iP(hone|od|ad)/i);
-    return this.each(function() {
-      var copyOptionsToList, disabled, options, sel, trigger, updateTriggerText, wrapper;
-      sel = $(this);
-      if (sel.hasClass('fancified') || sel[0].tagName !== 'SELECT') {
-        return;
-      }
-      sel.addClass('fancified');
-      sel.css({
-        width: 1,
-        height: 1,
-        display: 'block',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        opacity: 0
-      });
-      sel.wrap('<div class="fancy-select">');
-      wrapper = sel.parent();
-      if (sel.data('class')) {
-        wrapper.addClass(sel.data('class'));
-      }
-      wrapper.append('<div class="trigger">');
-      if (!(isiOS && !settings.forceiOS)) {
-        wrapper.append('<ul class="options">');
-      }
-      trigger = wrapper.find('.trigger');
-      options = wrapper.find('.options');
-      disabled = sel.prop('disabled');
-      if (disabled) {
-        wrapper.addClass('disabled');
-      }
-      updateTriggerText = function() {
-        return trigger.text(sel.find(':selected').text());
-      };
-      sel.on('blur', function() {
-        if (trigger.hasClass('open')) {
-          return setTimeout(function() {
-            return trigger.trigger('close');
-          }, 120);
-        }
-      });
-      trigger.on('close', function() {
-        trigger.removeClass('open');
-        return options.removeClass('open');
-      });
-      trigger.on('click', function() {
-        var offParent, parent;
-        if (!disabled) {
-          trigger.toggleClass('open');
-          if (isiOS && !settings.forceiOS) {
-            if (trigger.hasClass('open')) {
-              return sel.focus();
-            }
-          } else {
-            if (trigger.hasClass('open')) {
-              parent = trigger.parent();
-              offParent = parent.offsetParent();
-              if ((parent.offset().top + parent.outerHeight() + options.outerHeight() + 20) > $(window).height() + $(window).scrollTop()) {
-                options.addClass('overflowing');
-              } else {
-                options.removeClass('overflowing');
-              }
-            }
-            options.toggleClass('open');
-            if (!isiOS) {
-              return sel.focus();
-            }
-          }
-        }
-      });
-      sel.on('enable', function() {
-        sel.prop('disabled', false);
-        wrapper.removeClass('disabled');
-        disabled = false;
-        return copyOptionsToList();
-      });
-      sel.on('disable', function() {
-        sel.prop('disabled', true);
-        wrapper.addClass('disabled');
-        return disabled = true;
-      });
-      sel.on('change', function(e) {
-        if (e.originalEvent && e.originalEvent.isTrusted) {
-          return e.stopPropagation();
-        } else {
-          return updateTriggerText();
-        }
-      });
-      sel.on('keydown', function(e) {
-        var hovered, newHovered, w;
-        w = e.which;
-        hovered = options.find('.hover');
-        hovered.removeClass('hover');
-        if (!options.hasClass('open')) {
-          if (w === 13 || w === 32 || w === 38 || w === 40) {
-            e.preventDefault();
-            return trigger.trigger('click');
-          }
-        } else {
-          if (w === 38) {
-            e.preventDefault();
-            if (hovered.length && hovered.index() > 0) {
-              hovered.prev().addClass('hover');
-            } else {
-              options.find('li:last-child').addClass('hover');
-            }
-          } else if (w === 40) {
-            e.preventDefault();
-            if (hovered.length && hovered.index() < options.find('li').length - 1) {
-              hovered.next().addClass('hover');
-            } else {
-              options.find('li:first-child').addClass('hover');
-            }
-          } else if (w === 27) {
-            e.preventDefault();
-            trigger.trigger('click');
-          } else if (w === 13 || w === 32) {
-            e.preventDefault();
-            hovered.trigger('click');
-          } else if (w === 9) {
-            if (trigger.hasClass('open')) {
-              trigger.trigger('close');
-            }
-          }
-          newHovered = options.find('.hover');
-          if (newHovered.length) {
-            options.scrollTop(0);
-            return options.scrollTop(newHovered.position().top - 12);
-          }
-        }
-      });
-      options.on('click', 'li', function(e) {
-        sel.val($(this).data('value'));
-        if (!isiOS) {
-          sel.trigger('blur').trigger('focus');
-        }
-        options.find('.selected').removeClass('selected');
-        $(e.currentTarget).addClass('selected');
-        return sel.val($(this).data('value')).trigger('change').trigger('blur').trigger('focus');
-      });
-      options.on('mouseenter', 'li', function() {
-        var hovered, nowHovered;
-        nowHovered = $(this);
-        hovered = options.find('.hover');
-        hovered.removeClass('hover');
-        return nowHovered.addClass('hover');
-      });
-      options.on('mouseleave', 'li', function() {
-        return options.find('.hover').removeClass('hover');
-      });
-      copyOptionsToList = function() {
-        var selOpts;
-        updateTriggerText();
-        if (isiOS && !settings.forceiOS) {
-          return;
-        }
-        selOpts = sel.find('option');
-        return sel.find('option').each(function(i, opt) {
-          opt = $(opt);
-          if (!opt.prop('disabled') && (opt.val() || settings.includeBlank)) {
-            if (opt.prop('selected')) {
-              return options.append("<li data-value=\"" + (opt.val()) + "\" class=\"selected\">" + (opt.text()) + "</li>");
-            } else {
-              return options.append("<li data-value=\"" + (opt.val()) + "\">" + (opt.text()) + "</li>");
-            }
-          }
-        });
-      };
-      sel.on('update', function() {
-        wrapper.find('.options').empty();
-        return copyOptionsToList();
-      });
-      return copyOptionsToList();
-    });
-  };
-
-}).call(this);
-
-//--------------------------------------------------------------------------------------------
 
 
 /* ---------------------- 
@@ -4963,28 +3938,6 @@ https://github.com/imakewebthings/jquery-waypoints/blob/master/licenses.txt
 //--------------------------------------------------------------------------------------------
 
 
-
-/* ---------------------- 
-  Ticker
----------------------- */
-//-- Ticker --
-/*
-    JQuery Advanced News Ticker 1.0.11 (20/02/14)
-    created by risq
-    website (docs & demos) : https://risq.github.io/jquery-advanced-news-ticker/
-*/
-(function(b,k,l,m){function g(a,f){this.element=a;this.$el=b(a);this.options=b.extend({},c,f);this._defaults=c;this._name=d;this.moveInterval;this.moving=this.paused=this.state=0;(this.$el.is("ul")||this.$el.is("ol"))&&this.init()}var d="newsTicker",c={row_height:20,max_rows:3,speed:400,duration:2500,direction:"up",autostart:1,pauseOnHover:1,nextButton:null,prevButton:null,startButton:null,stopButton:null,hasMoved:function(){},movingUp:function(){},movingDown:function(){},start:function(){},stop:function(){},
-pause:function(){},unpause:function(){}};g.prototype={init:function(){this.$el.height(this.options.row_height*this.options.max_rows-15).css({overflow:"hidden"});this.checkSpeed();this.options.nextButton&&"undefined"!==typeof this.options.nextButton[0]&&this.options.nextButton.click(function(a){this.moveNext();this.resetInterval()}.bind(this));this.options.prevButton&&"undefined"!==typeof this.options.prevButton[0]&&this.options.prevButton.click(function(a){this.movePrev();this.resetInterval()}.bind(this));
-this.options.stopButton&&"undefined"!==typeof this.options.stopButton[0]&&this.options.stopButton.click(function(a){this.stop()}.bind(this));this.options.startButton&&"undefined"!==typeof this.options.startButton[0]&&this.options.startButton.click(function(a){this.start()}.bind(this));this.options.pauseOnHover&&this.$el.hover(function(){this.state&&this.pause()}.bind(this),function(){this.state&&this.unpause()}.bind(this));this.options.autostart&&this.start()},start:function(){this.state||(this.state=
-1,this.resetInterval(),this.options.start())},stop:function(){this.state&&(clearInterval(this.moveInterval),this.state=0,this.options.stop())},resetInterval:function(){this.state&&(clearInterval(this.moveInterval),this.moveInterval=setInterval(function(){this.move()}.bind(this),this.options.duration))},move:function(){this.paused||this.moveNext()},moveNext:function(){"down"===this.options.direction?this.moveDown():"up"===this.options.direction&&this.moveUp()},movePrev:function(){"down"===this.options.direction?
-this.moveUp():"up"===this.options.direction&&this.moveDown()},pause:function(){this.paused||(this.paused=1);this.options.pause()},unpause:function(){this.paused&&(this.paused=0);this.options.unpause()},moveDown:function(){this.moving||(this.moving=1,this.options.movingDown(),this.$el.children("li:last").detach().prependTo(this.$el).css("marginTop","-"+this.options.row_height+"px").animate({marginTop:"0px"},this.options.speed,function(){this.moving=0;this.options.hasMoved()}.bind(this)))},moveUp:function(){if(!this.moving){this.moving=
-1;this.options.movingUp();var a=this.$el.children("li:first");a.animate({marginTop:"-"+this.options.row_height+"px"},this.options.speed,function(){a.detach().css("marginTop","0").appendTo(this.$el);this.moving=0;this.options.hasMoved()}.bind(this))}},updateOption:function(a,b){"undefined"!==typeof this.options[a]&&(this.options[a]=b,"duration"==a||"speed"==a)&&(this.checkSpeed(),this.resetInterval())},add:function(a){this.$el.append(b("<li>").html(a))},getState:function(){return paused?2:this.state},
-checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options.speed=this.options.duration-25)},destroy:function(){this._destroy()}};b.fn[d]=function(a){var f=arguments;return this.each(function(){var c=b(this),e=b.data(this,"plugin_"+d),h="object"===typeof a&&a;e||c.data("plugin_"+d,e=new g(this,h));"string"===typeof a&&e[a].apply(e,Array.prototype.slice.call(f,1))})}})(jQuery,window,document);
-//--------------------------------------------------------------------------------------------
-
-
-
-
 /* ---------------------- 
   Social Sharing Buttons
 ---------------------- */
@@ -4996,7 +3949,6 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 */
 (function(e,t,n){"use strict";var r=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=t("li",n).length,i=100/r;t("li",n).css("width",i+"%").attr("data-initwidth",i)})},i=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=parseFloat(t(n).width()),i=t("li",n).not(".small").first().width(),s=t("li.small",n).length;i>170&&s<1?t(n).addClass("large-format"):t(n).removeClass("large-format");r<200?t(n).removeClass("small-format").addClass("tiny-format"):t(n).removeClass("tiny-format")})},s=function(){t(".rrssb-buttons").each(function(e){var n=t(this),r=0,i=0,s,o,a=t("li.small",n).length;if(a===t("li",n).length){var f=a*42,l=parseFloat(t(n).width());s=t("li.small",n).first();o=parseFloat(t(s).attr("data-size"))+55;if(f+o<l){t(n).removeClass("small-format");t("li.small",n).first().removeClass("small");u()}}else{t("li",n).not(".small").each(function(e){var n=parseFloat(t(this).attr("data-size"))+55,s=parseFloat(t(this).width());r+=s;i+=n});var c=r-i;s=t("li.small",n).first();o=parseFloat(t(s).attr("data-size"))+55;if(o<c){t(s).removeClass("small");u()}}})},o=function(e){t(".rrssb-buttons").each(function(e){var n=t(this),r=t("li",n).nextAll(),i=r.length;t(t("li",n).get().reverse()).each(function(e,r){if(t(this).hasClass("small")===!1){var i=parseFloat(t(this).attr("data-size"))+55,o=parseFloat(t(this).width());if(i>o){var a=t("li",n).not(".small").last();t(a).addClass("small");u()}}--r||s()})});e===!0&&f(u)},u=function(){t(".rrssb-buttons").each(function(e){var n=t(this),i,s,o,u,a,f=t("li.small",n).length;if(f>0&&f!==t("li",n).length){t(n).removeClass("small-format");t("li.small",n).css("width","42px");o=f*42;i=t("li",n).not(".small").length;s=100/i;a=o/i;navigator.userAgent.indexOf("Chrome")>=0||navigator.userAgent.indexOf("Safari")>=0?u="-webkit-calc("+s+"% - "+a+"px)":navigator.userAgent.indexOf("Firefox")>=0?u="-moz-calc("+s+"% - "+a+"px)":u="calc("+s+"% - "+a+"px)";t("li",n).not(".small").css("width",u)}else if(f===t("li",n).length){t(n).addClass("small-format");r()}else{t(n).removeClass("small-format");r()}});i()},a=function(){t(".rrssb-buttons").each(function(e){t(this).addClass("rrssb-"+(e+1))});r();t(".rrssb-buttons li .text").each(function(e){var n=parseFloat(t(this).width());t(this).closest("li").attr("data-size",n)});o(!0)},f=function(e){t(".rrssb-buttons li.small").removeClass("small");o();e()},l=function(t,r,i,s){var o=e.screenLeft!==n?e.screenLeft:screen.left,u=e.screenTop!==n?e.screenTop:screen.top,a=e.innerWidth?e.innerWidth:document.documentElement.clientWidth?document.documentElement.clientWidth:screen.width,f=e.innerHeight?e.innerHeight:document.documentElement.clientHeight?document.documentElement.clientHeight:screen.height,l=a/2-i/2+o,c=f/3-s/3+u,h=e.open(t,r,"scrollbars=yes, width="+i+", height="+s+", top="+c+", left="+l);e.focus&&h.focus()},c=function(){var e={};return function(t,n,r){r||(r="Don't call this twice without a uniqueId");e[r]&&clearTimeout(e[r]);e[r]=setTimeout(t,n)}}();t(".rrssb-buttons a.popup").on("click",function(e){var n=t(this);l(n.attr("href"),n.find(".text").html(),580,470);e.preventDefault()});t(e).resize(function(){f(u);c(function(){f(u)},200,"finished resizing")});t(document).ready(function(){a()})})(window,jQuery);
 //--------------------------------------------------------------------------------------------
-
 
 
 /* ---------------------- 
@@ -5103,6 +4055,195 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 
 })( window );
 //--------------------------------------------------------------------------------------------
+
+
+/* ---------------------- 
+  jQuery Easing
+---------------------- */
+/*
+ * jQuery Easing v1.3 - https://gsgd.co.uk/sandbox/jquery/easing/
+ *
+ * Uses the built in easing capabilities added In jQuery 1.1
+ * to offer multiple easing options
+ *
+ * TERMS OF USE - jQuery Easing
+ * 
+ * Open source under the BSD License. 
+ * 
+ * Copyright © 2008 George McGinley Smith
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list of 
+ * conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list 
+ * of conditions and the following disclaimer in the documentation and/or other materials 
+ * provided with the distribution.
+ * 
+ * Neither the name of the author nor the names of contributors may be used to endorse 
+ * or promote products derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+*/
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+jQuery.easing['jswing'] = jQuery.easing['swing'];
+
+jQuery.extend( jQuery.easing,
+{
+  def: 'easeOutQuad',
+  swing: function (x, t, b, c, d) {
+    //alert(jQuery.easing.default);
+    return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
+  },
+  easeInQuad: function (x, t, b, c, d) {
+    return c*(t/=d)*t + b;
+  },
+  easeOutQuad: function (x, t, b, c, d) {
+    return -c *(t/=d)*(t-2) + b;
+  },
+  easeInOutQuad: function (x, t, b, c, d) {
+    if ((t/=d/2) < 1) return c/2*t*t + b;
+    return -c/2 * ((--t)*(t-2) - 1) + b;
+  },
+  easeInCubic: function (x, t, b, c, d) {
+    return c*(t/=d)*t*t + b;
+  },
+  easeOutCubic: function (x, t, b, c, d) {
+    return c*((t=t/d-1)*t*t + 1) + b;
+  },
+  easeInOutCubic: function (x, t, b, c, d) {
+    if ((t/=d/2) < 1) return c/2*t*t*t + b;
+    return c/2*((t-=2)*t*t + 2) + b;
+  },
+  easeInQuart: function (x, t, b, c, d) {
+    return c*(t/=d)*t*t*t + b;
+  },
+  easeOutQuart: function (x, t, b, c, d) {
+    return -c * ((t=t/d-1)*t*t*t - 1) + b;
+  },
+  easeInOutQuart: function (x, t, b, c, d) {
+    if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
+    return -c/2 * ((t-=2)*t*t*t - 2) + b;
+  },
+  easeInQuint: function (x, t, b, c, d) {
+    return c*(t/=d)*t*t*t*t + b;
+  },
+  easeOutQuint: function (x, t, b, c, d) {
+    return c*((t=t/d-1)*t*t*t*t + 1) + b;
+  },
+  easeInOutQuint: function (x, t, b, c, d) {
+    if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
+    return c/2*((t-=2)*t*t*t*t + 2) + b;
+  },
+  easeInSine: function (x, t, b, c, d) {
+    return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
+  },
+  easeOutSine: function (x, t, b, c, d) {
+    return c * Math.sin(t/d * (Math.PI/2)) + b;
+  },
+  easeInOutSine: function (x, t, b, c, d) {
+    return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+  },
+  easeInExpo: function (x, t, b, c, d) {
+    return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
+  },
+  easeOutExpo: function (x, t, b, c, d) {
+    return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+  },
+  easeInOutExpo: function (x, t, b, c, d) {
+    if (t==0) return b;
+    if (t==d) return b+c;
+    if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
+    return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+  },
+  easeInCirc: function (x, t, b, c, d) {
+    return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+  },
+  easeOutCirc: function (x, t, b, c, d) {
+    return c * Math.sqrt(1 - (t=t/d-1)*t) + b;
+  },
+  easeInOutCirc: function (x, t, b, c, d) {
+    if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b;
+    return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b;
+  },
+  easeInElastic: function (x, t, b, c, d) {
+    var s=1.70158;var p=0;var a=c;
+    if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+    if (a < Math.abs(c)) { a=c; var s=p/4; }
+    else var s = p/(2*Math.PI) * Math.asin (c/a);
+    return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+  },
+  easeOutElastic: function (x, t, b, c, d) {
+    var s=1.70158;var p=0;var a=c;
+    if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
+    if (a < Math.abs(c)) { a=c; var s=p/4; }
+    else var s = p/(2*Math.PI) * Math.asin (c/a);
+    return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+  },
+  easeInOutElastic: function (x, t, b, c, d) {
+    var s=1.70158;var p=0;var a=c;
+    if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
+    if (a < Math.abs(c)) { a=c; var s=p/4; }
+    else var s = p/(2*Math.PI) * Math.asin (c/a);
+    if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+    return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+  },
+  easeInBack: function (x, t, b, c, d, s) {
+    if (s == undefined) s = 1.70158;
+    return c*(t/=d)*t*((s+1)*t - s) + b;
+  },
+  easeOutBack: function (x, t, b, c, d, s) {
+    if (s == undefined) s = 1.70158;
+    return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+  },
+  easeInOutBack: function (x, t, b, c, d, s) {
+    if (s == undefined) s = 1.70158; 
+    if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+    return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+  },
+  easeInBounce: function (x, t, b, c, d) {
+    return c - jQuery.easing.easeOutBounce (x, d-t, 0, c, d) + b;
+  },
+  easeOutBounce: function (x, t, b, c, d) {
+    if ((t/=d) < (1/2.75)) {
+      return c*(7.5625*t*t) + b;
+    } else if (t < (2/2.75)) {
+      return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+    } else if (t < (2.5/2.75)) {
+      return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+    } else {
+      return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+    }
+  },
+  easeInOutBounce: function (x, t, b, c, d) {
+    if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
+    return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
+  }
+});
+//--------------------------------------------------------------------------------------------
+
+
+/* ---------------------- 
+  HTML5 Shiv
+---------------------- */
+/**
+* @preserve HTML5 Shiv 3.7.1 | @afarkas @jdalton @jon_neal @rem | MIT/GPL2 Licensed
+*/
+!function(a,b){function c(a,b){var c=a.createElement("p"),d=a.getElementsByTagName("head")[0]||a.documentElement;return c.innerHTML="x<style>"+b+"</style>",d.insertBefore(c.lastChild,d.firstChild)}function d(){var a=x.elements;return"string"==typeof a?a.split(" "):a}function e(a){var b=w[a[u]];return b||(b={},v++,a[u]=v,w[v]=b),b}function f(a,c,d){if(c||(c=b),p)return c.createElement(a);d||(d=e(c));var f;return f=d.cache[a]?d.cache[a].cloneNode():t.test(a)?(d.cache[a]=d.createElem(a)).cloneNode():d.createElem(a),!f.canHaveChildren||s.test(a)||f.tagUrn?f:d.frag.appendChild(f)}function g(a,c){if(a||(a=b),p)return a.createDocumentFragment();c=c||e(a);for(var f=c.frag.cloneNode(),g=0,h=d(),i=h.length;i>g;g++)f.createElement(h[g]);return f}function h(a,b){b.cache||(b.cache={},b.createElem=a.createElement,b.createFrag=a.createDocumentFragment,b.frag=b.createFrag()),a.createElement=function(c){return x.shivMethods?f(c,a,b):b.createElem(c)},a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+d().join().replace(/[\w\-:]+/g,function(a){return b.createElem(a),b.frag.createElement(a),'c("'+a+'")'})+");return n}")(x,b.frag)}function i(a){a||(a=b);var d=e(a);return!x.shivCSS||o||d.hasCSS||(d.hasCSS=!!c(a,"article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")),p||h(a,d),a}function j(a){for(var b,c=a.getElementsByTagName("*"),e=c.length,f=RegExp("^(?:"+d().join("|")+")$","i"),g=[];e--;)b=c[e],f.test(b.nodeName)&&g.push(b.applyElement(k(b)));return g}function k(a){for(var b,c=a.attributes,d=c.length,e=a.ownerDocument.createElement(z+":"+a.nodeName);d--;)b=c[d],b.specified&&e.setAttribute(b.nodeName,b.nodeValue);return e.style.cssText=a.style.cssText,e}function l(a){for(var b,c=a.split("{"),e=c.length,f=RegExp("(^|[\\s,>+~])("+d().join("|")+")(?=[[\\s,>+~#.:]|$)","gi"),g="$1"+z+"\\:$2";e--;)b=c[e]=c[e].split("}"),b[b.length-1]=b[b.length-1].replace(f,g),c[e]=b.join("}");return c.join("{")}function m(a){for(var b=a.length;b--;)a[b].removeNode()}function n(a){function b(){clearTimeout(g._removeSheetTimer),d&&d.removeNode(!0),d=null}var d,f,g=e(a),h=a.namespaces,i=a.parentWindow;return!A||a.printShived?a:("undefined"==typeof h[z]&&h.add(z),i.attachEvent("onbeforeprint",function(){b();for(var e,g,h,i=a.styleSheets,k=[],m=i.length,n=Array(m);m--;)n[m]=i[m];for(;h=n.pop();)if(!h.disabled&&y.test(h.media)){try{e=h.imports,g=e.length}catch(o){g=0}for(m=0;g>m;m++)n.push(e[m]);try{k.push(h.cssText)}catch(o){}}k=l(k.reverse().join("")),f=j(a),d=c(a,k)}),i.attachEvent("onafterprint",function(){m(f),clearTimeout(g._removeSheetTimer),g._removeSheetTimer=setTimeout(b,500)}),a.printShived=!0,a)}var o,p,q="3.7.1",r=a.html5||{},s=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i,t=/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,u="_html5shiv",v=0,w={};!function(){try{var a=b.createElement("a");a.innerHTML="<xyz></xyz>",o="hidden"in a,p=1==a.childNodes.length||function(){b.createElement("a");var a=b.createDocumentFragment();return"undefined"==typeof a.cloneNode||"undefined"==typeof a.createDocumentFragment||"undefined"==typeof a.createElement}()}catch(c){o=!0,p=!0}}();var x={elements:r.elements||"abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output picture progress section summary template time video",version:q,shivCSS:r.shivCSS!==!1,supportsUnknownElements:p,shivMethods:r.shivMethods!==!1,type:"default",shivDocument:i,createElement:f,createDocumentFragment:g};a.html5=x,i(b);var y=/^$|\b(?:all|print)\b/,z="html5shiv",A=!p&&function(){var c=b.documentElement;return!("undefined"==typeof b.namespaces||"undefined"==typeof b.parentWindow||"undefined"==typeof c.applyElement||"undefined"==typeof c.removeNode||"undefined"==typeof a.attachEvent)}();x.type+=" print",x.shivPrint=n,n(b)}(this,document);
+//--------------------------------------------------------------------------------------------
+
 
 /* ---------------------- 
   Respond
@@ -5577,3 +4718,4 @@ checkSpeed:function(){this.options.duration<this.options.speed+25&&(this.options
 
 
 //--------------------------------------------------------------------------------------------
+
