@@ -24,10 +24,10 @@ This file includes all cusomized javascript and all plugins libraries options
 			'opacity': 1,
 			'visibility': 'visible'
 		});
-		jQuery('.back-to-top').css({
-			'opacity': 1,
-			'visibility': 'visible'
-		});
+//		jQuery('.back-to-top').css({
+//			'opacity': 1,
+//			'visibility': 'visible'
+//		});
 		jQuery('body').css({
 			'overflow': 'visible'
 		});
