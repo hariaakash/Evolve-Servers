@@ -6,7 +6,7 @@
     $subject        =  strip_tags($_POST['subject']);
     $themessage     =  strip_tags($_POST['message']);
     $themessage     =  $themessage."the sender phone number is ".$phonenumber ;
-    $toEmail = 'admin@evolveservers.com';
+    $toEmail = 'support@evolveservers.com';
     $toName = 'Evolve Servers';
 
     $headers = 'From:' .$fromName . "\r\n" .
