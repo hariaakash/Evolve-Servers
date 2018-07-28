@@ -88,7 +88,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(../img/loader/preview.gif) center no-repeat #fff;
+    background: url(../images/loader/preview.gif) center no-repeat #fff;
     background-size: 290px;
 }
 
@@ -229,7 +229,7 @@ body {
 
 
 .header-area-in  .header-animation .header-waves {
-  background: url(../img/header/waves.png) no-repeat bottom;
+  background: url(../images/header/waves.png) no-repeat bottom;
   background-size: 100%;
   position: absolute;
   width: 100%;
@@ -271,7 +271,7 @@ body {
 }
 
 .header-area-in  .header-animation .server-bg {
-  background: url(../img/header/server.png) no-repeat bottom;
+  background: url(../images/header/server.png) no-repeat bottom;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -282,7 +282,7 @@ body {
 }
 
 .header-area-in  .header-animation .wiz-line {
-    background: url(../img/header/wiz-line.png) no-repeat bottom;
+    background: url(../images/header/wiz-line.png) no-repeat bottom;
     position: absolute;
     width: 85px;
     background-size: 100%;
@@ -295,7 +295,7 @@ body {
 }
 
 .header-area-in  .header-animation .xo-on {
-    background: url(../img/header/xo-1.png) no-repeat bottom;
+    background: url(../images/header/xo-1.png) no-repeat bottom;
     position: absolute;
     width: 120px;
     background-size: 100%;
@@ -308,7 +308,7 @@ body {
 }
 
 .header-area-in  .header-animation .xo-tw {
-  background: url(../img/header/xo-2.png) no-repeat bottom;
+  background: url(../images/header/xo-2.png) no-repeat bottom;
   position: absolute;
   width: 53px;
   background-size: 100%;
@@ -321,7 +321,7 @@ body {
 }
 
 .header-area-in  .header-animation .xo-tr {
-  background: url(../img/header/xo-3.png) no-repeat bottom;
+  background: url(../images/header/xo-3.png) no-repeat bottom;
   position: absolute;
   width: 442px;
   background-size: 100%;
@@ -335,7 +335,7 @@ body {
 
 
 .header-area-in  .header-animation .xo-fr {
-    background: url(../img/header/xo-4.png) no-repeat bottom;
+    background: url(../images/header/xo-4.png) no-repeat bottom;
     position: absolute;
     width: 405px;
     background-size: 100%;
@@ -437,7 +437,7 @@ body {
 }
 
 .main-header .logo-header {
-    background: url(../img/header/logo.png) no-repeat bottom;
+    background: url(../images/header/logo.png) no-repeat bottom;
     width: 115px;
     height: 33px;
     background-size: contain;
@@ -445,7 +445,7 @@ body {
 
 
 .main-header .top-header-fixed .logo-header  {
-    background: url(../img/header/logo-b.png) no-repeat bottom;
+    background: url(../images/header/logo-b.png) no-repeat bottom;
 	width: 115px;
     height: 33px;
     background-size: contain;
@@ -1678,7 +1678,7 @@ body {
     width: 15%;
     padding-bottom: 15%;
     margin: 0 9.1%;
-    background: #f5f5f5 url(../img/section/server.png) no-repeat right bottom;
+    background: #f5f5f5 url(../images/section/server.png) no-repeat right bottom;
     background-size: 76%;
     border-radius: 50%;
     cursor: pointer;
@@ -1686,7 +1686,7 @@ body {
 }
 
 #radios label:hover{
-    background: #e8e8e8 url(../img/section/server.png) no-repeat right bottom;
+    background: #e8e8e8 url(../images/section/server.png) no-repeat right bottom;
     background-size: 80%;
 }
 
@@ -1725,7 +1725,7 @@ body {
     animation-fill-mode: forwards;
     -webkit-transition: 0.2s left .05s ease-in-out;
     transition: 0.2s left .05s ease-in-out;
-    
+
 }
 #input1:checked  ~ #slider{ -webkit-animation-name: input1; animation-name: input1; left:6.6%;-webkit-box-shadow: 0 9px 18px rgba(0, 0, 0, 0.04); box-shadow: 0 9px 18px rgba(0, 0, 0, 0.04); }
 #input2:checked  ~ #slider{ -webkit-animation-name: input2; animation-name: input2; left:39.7%;-webkit-box-shadow: 0 9px 18px rgba(0, 0, 0, 0.04); box-shadow: 0 9px 18px rgba(0, 0, 0, 0.04); }
@@ -1809,7 +1809,7 @@ body {
 
 
 .how-work{
-    background: #f5f5f5 url(../img/section/chart.png) center top;
+    background: #f5f5f5 url(../images/section/chart.png) center top;
     background-repeat: repeat;
     padding: 370px 0 100px;
     margin-top: -270px;
@@ -2033,7 +2033,7 @@ body {
 
 
 .our-services {
-    background: #fff url(../img/section/services.png) no-repeat top;
+    background: #fff url(../images/section/services.png) no-repeat top;
     background-size: 100%;
     padding: 100px 0;
     min-height: 500px;
@@ -2137,22 +2137,22 @@ body {
 	border-radius: 100px 8px 8px 100px;
 	width:10%;
 	}
-	
+
 	20% {
 	border-radius: 100px 8px 8px 100px;
 	width:20%;
 	}
-	
+
 	30% {
 	border-radius: 100px 8px 8px 100px;
 	width:30%;
 	}
-	
+
 	60% {
 	border-radius: 100px 8px 8px 100px;
 	width:100%;
 	}
-	
+
 	80% {
 	border-radius: 100px 8px 8px 100px;
 	width: 90%;
@@ -2196,7 +2196,7 @@ body {
 
 
 .index-ads{
-    background: url(../img/section/prson.jpg) 50% -45.6px / cover no-repeat rgb(244, 242, 245);
+    background: url(../images/section/prson.jpg) 50% -45.6px / cover no-repeat rgb(244, 242, 245);
     background-position: center bottom;
     background-repeat: no-repeat;
     margin: 0 auto;
@@ -2413,7 +2413,7 @@ body {
     height: 700px;
 	opacity:0.2;
 	}
-	
+
 }
 
 
@@ -2429,7 +2429,7 @@ body {
     height: 500px;
 	opacity:0.2;
 	}
-	
+
 }
 
 @-webkit-keyframes biggeron {
@@ -2444,7 +2444,7 @@ body {
     height: 300px;
 	opacity:0.2;
 	}
-	
+
 }
 
 .padding-top-forti{
@@ -2686,7 +2686,7 @@ body {
 .faq-section .bg-mayl-faq {
     position: absolute;
     left: -150px;
-    background: url(../img/section/mac.png) no-repeat;
+    background: url(../images/section/mac.png) no-repeat;
     width: 760px;
     height: 461px;
     background-size: 100%;
@@ -3882,7 +3882,7 @@ body {
 
 
 .youtub-sec-open{
-    background: url(../img/pages/youtube.jpg) no-repeat center;
+    background: url(../images/pages/youtube.jpg) no-repeat center;
     max-width: 784px;
     max-height: 548px;
     width: 100%;
@@ -4387,7 +4387,7 @@ body {
 }
 
 .fhost-ftrue-non-ind .col-5{
-    text-align: center; 
+    text-align: center;
 }
 
 .fhost-ftrue-non-ind .col-3 img{
@@ -4484,7 +4484,7 @@ body {
 }
 
 .help-center-header{
-    background: url(../img/header/help.jpg) no-repeat bottom;
+    background: url(../images/header/help.jpg) no-repeat bottom;
     background-size: cover;
 }
 
@@ -4535,7 +4535,7 @@ body {
 
 
 .not-found-header{
-    background: url(../img/header/404.jpg) no-repeat bottom;
+    background: url(../images/header/404.jpg) no-repeat bottom;
     background-size: cover;
 }
 
@@ -5563,11 +5563,11 @@ body {
     padding: 1rem;
 }
 
-.thead-inverse-prush tr>th:first-child{ 
+.thead-inverse-prush tr>th:first-child{
    border-radius: 8px 0 0 0;
 }
 
-.thead-inverse-prush tr>th:last-child{ 
+.thead-inverse-prush tr>th:last-child{
    border-radius: 0 8px 0 0;
 }
 
@@ -5689,7 +5689,7 @@ display: block;
 
 
 .shrtcd-pg:before {
-	display: none;	
+	display: none;
 }
 
 
@@ -5925,8 +5925,8 @@ display: block;
 }
 
 @media (min-width: 992px) {
-	
-	
+
+
 .login-drop-down-header:after {
     content: '';
     width: 0;
@@ -6047,8 +6047,8 @@ display: block;
 
 
 @media (max-width: 992px) {
-	
-	
+
+
 .login-drop-down-header{
     border-radius: 0 !important;
 }
@@ -6061,7 +6061,7 @@ display: block;
 
 
 @media (max-width: 769px) {
-	
+
 .res-info-img-text .res-info-img h5 {
     text-align: center;
     margin-top: 20px;
@@ -6374,7 +6374,7 @@ display: block;
 
 .pg-v2-clavet .ahref-title-vlv2:hover{
     background: #53bb69;
-    color: #fff;    
+    color: #fff;
 	text-decoration: none;
     text-transform: uppercase;
 }
