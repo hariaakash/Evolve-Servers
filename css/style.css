@@ -2700,13 +2700,13 @@ hr, .container hr {
 }
 
 .logo {
-    margin-top: 30px;
+    margin-top: 18px;
     margin-bottom: 0px;
 }
 
 .logo a {
     float: left;
-    height: 33px;
+    /* height: 33px; */
     display: block;
     overflow: hidden;
 }
