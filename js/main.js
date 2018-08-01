@@ -10,13 +10,13 @@ load("./js/script.js");
 
 
 // Cookie Consent
-window.cookieconsent_options = {
-    "message": "This website uses cookies to ensure you get the best experience on our website",
-    "dismiss": "Got it!",
-    "learnMore": "More info",
-    "link": "privacy.html",
-    "theme": "light-top"
-};
+// window.cookieconsent_options = {
+//     "message": "This website uses cookies to ensure you get the best experience on our website",
+//     "dismiss": "Got it!",
+//     "learnMore": "More info",
+//     "link": "privacy.html",
+//     "theme": "light-top"
+// };
 
 // Tawk.to
 var $_Tawk_API = {},
@@ -30,3 +30,15 @@ var $_Tawk_API = {},
     s1.setAttribute('crossorigin', '*');
     s0.parentNode.insertBefore(s1, s0);
 })();
+
+// Twitter
+! function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = p + "://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }
+}(document, "script", "twitter-wjs");
