@@ -619,9 +619,9 @@ This file includes all cusomized javascript and all plugins libraries options
 
             if (jQuery('#responsiveMainNavToggler i').hasClass('fa-bars')) {
                 jQuery('#responsiveMainNavToggler i').removeClass('fa-bars');
-                jQuery('#responsiveMainNavToggler i').addClass('fa-close');
+                jQuery('#responsiveMainNavToggler i').addClass('fa-times');
             } else {
-                jQuery('#responsiveMainNavToggler i').removeClass('fa-close');
+                jQuery('#responsiveMainNavToggler i').removeClass('fa-times');
                 jQuery('#responsiveMainNavToggler i').addClass('fa-bars');
             }
 

@@ -8495,6 +8495,18 @@ hr, .container hr {
     padding: 40px 0px 0px 0px !important;
 }
 
+/* Support */
+
+.featureIconBig {
+    width: 100px !important;
+    height: 100px !important;
+    line-height: 110px !important;
+}
+
+.singleFeature .featureIconBig i {
+    font-size: 50px;
+}
+
 /* Locations */
 
 .container1 {
