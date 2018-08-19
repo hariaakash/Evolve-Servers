@@ -156,7 +156,7 @@ This file includes all cusomized javascript and all plugins libraries options
             margin: 0,
             loop: true,
             autoplay: true,
-            autoplayTimeout: 8000,
+            autoplayTimeout: 6000,
             autoplayHoverPause: false,
             nav: true,
             dots: false,
