@@ -18,19 +18,6 @@ load("./js/script.js");
 //     "theme": "light-top"
 // };
 
-// Tawk.to
-var $_Tawk_API = {},
-    $_Tawk_LoadStart = new Date();
-(function() {
-    var s1 = document.createElement("script"),
-        s0 = document.getElementsByTagName("script")[0];
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/5547af401aecef663055d9bb/default';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin', '*');
-    s0.parentNode.insertBefore(s1, s0);
-})();
-
 // Twitter
 ! function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0],
