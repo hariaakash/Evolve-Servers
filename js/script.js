@@ -10,6 +10,12 @@ This file includes all cusomized javascript and all plugins libraries options
     //-- Enable Use Strict Mode --
     "use strict";
 
+    // Remove the customerly link
+    $(document).on('click', 'div', function() {
+        $('.customerly-livechat-by').remove();
+    });
+
+
     //--Preloaing Effect --
     jQuery(window).on('load', function() {
         jQuery('.loadingContainer').css({
