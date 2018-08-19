@@ -3,20 +3,31 @@ function load(script) {
 }
 
 load("https://code.jquery.com/jquery-3.3.1.min.js");
-// load("https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js");
+load("https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js");
 load("https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js");
 load("./js/compiler.js");
 load("./js/script.js");
 
 
 // Cookie Consent
-// window.cookieconsent_options = {
-//     "message": "This website uses cookies to ensure you get the best experience on our website",
-//     "dismiss": "Got it!",
-//     "learnMore": "More info",
-//     "link": "privacy.html",
-//     "theme": "light-top"
-// };
+window.addEventListener("load", function() {
+    window.cookieconsent.initialise({
+        "palette": {
+            "popup": {
+                "background": "#252e39"
+            },
+            "button": {
+                "background": "#14a7d0",
+                "text": "#000000"
+            }
+        },
+        "theme": "classic",
+        "position": "bottom-left",
+        "content": {
+            "href": "https://evolveservers.com/privacy.html"
+        }
+    })
+});
 
 // Twitter
 ! function(d, s, id) {
