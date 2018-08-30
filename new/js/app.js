@@ -29,5 +29,5 @@ angular.module("evolveApp", ['angular-loading-bar', 'ui.router'])
                 }
             });
         $locationProvider.hashPrefix('');
-        $locationProvider.html5Mode(true);
+        // $locationProvider.html5Mode(true);
     });
