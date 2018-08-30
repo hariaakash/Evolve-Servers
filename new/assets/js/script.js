@@ -11,18 +11,18 @@
 		winObj.on( 'load', function()
 		{
 			var $preloader = $( '.loader-wrapper' );
-				
+
 			$preloader.find( '.cssload-loader' ).fadeOut();
 			$preloader.delay( 350 ).fadeOut( 'slow' );
 		} );
-		
+
  	/*----------------------------------------------------*/
 	/* Adaptive Menu Width
 	/*----------------------------------------------------*/
 
 	var ulMenu1 = $( 'ul.menu' );
 	winObj.on( 'resize', function()
-	{		
+	{
 		if( $( this ).width() > 992 )
 		{
 			ulMenu1.flexMenu();
@@ -290,9 +290,9 @@
 	/*----------------------------------------------------*/
 	var nav = $( '.header-line-wrapper' ),
 		navHide = $( '.header-wrapper' );
-		
+
 	winObj.on( 'scroll', function()
-	{		
+	{
 		if( $( this ).scrollTop() > navHide.height() - 20 )
 		{
 			nav.addClass( 'affix-top' );
@@ -405,7 +405,7 @@
 				if( !$( this ).hasClass( 'visible' ) )
 				{
 					$( this ).addClass( 'visible' );
-					
+
 					progressBarCreator( progressline69, 0.69 );
 					progressBarCreator( progressline80, 0.80 );
 					progressBarCreator( progressline52, 0.52 );
@@ -425,7 +425,7 @@
 				if( !$( this ).hasClass( 'visible' ) )
 				{
 					$( this ).addClass( 'visible' );
-					
+
 					progressBarCreator( progressline69, 0.69 );
 					progressBarCreator( progressline80, 0.80 );
 					progressBarCreator( progressline52, 0.52 );
@@ -438,16 +438,16 @@
 
 	/*----------------------------------------------------*/
 	/*	Add class to each element
-	/*----------------------------------------------------*/	
+	/*----------------------------------------------------*/
 	var itemChar = $( '.each-element' );
 	if( itemChar.length )
 	{
 		var classes = ['first', 'second', 'third'];
 
-		$(function() 
+		$(function()
 		{
 			var target = $('.item, .vertical-item');
-			target.each(function(index) 
+			target.each(function(index)
 			{
 				$(this).addClass(classes[index % 3]);
 			});
@@ -582,7 +582,7 @@
 				map: map,
 				title: 'INDIEGA',
 				animation: google.maps.Animation.DROP,
-				icon: '../assets/images/marker.png'
+				icon: './assets/images/marker.png'
 			} );
 
 			// Marker animation
