@@ -17,20 +17,6 @@ $(function() {
 				content: 'Sydney, Australia'
 			}
 		},
-		sydney: {
-			latitude: -33.8688,
-			longitude: 151.2093,
-			tooltip: {
-				content: 'Sydney, Australia'
-			}
-		},
-		tokyo: {
-			latitude: 35.6895,
-			longitude: 139.6917,
-			tooltip: {
-				content: 'Tokyo, Japan'
-			}
-		},
 		mumbai: {
 			latitude: 19.076,
 			longitude: 72.8777,
@@ -43,13 +29,6 @@ $(function() {
 			longitude: 103.85007,
 			tooltip: {
 				content: 'Singapore'
-			}
-		},
-		newyork: {
-			latitude: 40.73061,
-			longitude: -73.935242,
-			tooltip: {
-				content: 'New York, USA'
 			}
 		},
 		bangalore: {
@@ -71,6 +50,41 @@ $(function() {
 			longitude: 24.9384,
 			tooltip: {
 				content: 'Helsinki, Finland'
+			}
+		},
+		amsterdam: {
+			latitude: 52.368,
+			longitude: 4.9036,
+			tooltip: {
+				content: 'Amsterdam, Netherlands'
+			}
+		},
+		milan: {
+			latitude: 45.4642,
+			longitude: 9.19,
+			tooltip: {
+				content: 'Milan, Italy'
+			}
+		},
+		stockholm: {
+			latitude: 59.3293,
+			longitude: 18.0686,
+			tooltip: {
+				content: 'Stockholm, Sweden'
+			}
+		},
+		london: {
+			latitude: 51.5074,
+			longitude: 0.1278,
+			tooltip: {
+				content: 'London, UK'
+			}
+		},
+		newyork: {
+			latitude: 40.73061,
+			longitude: -73.935242,
+			tooltip: {
+				content: 'New York, USA'
 			}
 		}
 	};
